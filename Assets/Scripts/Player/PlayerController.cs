@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float _horizontalInput, _verticalInput;
-    private bool _ability1Pressed, _ability2Pressed = false;
-    private readonly int _speed = 15;
-    private readonly float _movementSmoothing = .1f;
+    private bool _ability1Pressed, _ability2Pressed, _isDodging = false;
+    private int _currentSpeed = 8;
+    private readonly int _speed = 8;
+    private readonly float _movementSmoothing = 0f;
     private Vector2 _currentVelocity = Vector2.zero;
+    private Vector3 _currentDirection = Vector2.zero;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
     [SerializeField] private AbilityType _ability1Type = AbilityType.Dodge;
@@ -18,6 +20,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite _mouseFront;
     [SerializeField] private Sprite _mouseSide;
     [SerializeField] private Sprite _mouseBack;
+
+    public void PerformDodge()
+    {
+        _isDodging = true;
+        _currentSpeed *= 2;
+    }
+
+    public void EndDodge()
+    {
+        _isDodging = false;
+        _currentSpeed = _speed;
+    }
 
     private void Awake()
     {
@@ -33,6 +47,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isDodging)
+            return;
+
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonDown("Ability1"))
@@ -44,7 +61,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move(_horizontalInput, _verticalInput);
+        Vector3 targetDirection = new Vector3(_horizontalInput, _verticalInput, 0).normalized;
+        if (_isDodging)
+            targetDirection = _currentDirection;
+
+        Move(targetDirection);
+
         if (_ability1Pressed)
             ActivateAbility1();
 
@@ -52,12 +74,14 @@ public class PlayerController : MonoBehaviour
             ActivateAbility2();
     }
 
-    private void Move(float xSpeed, float ySpeed)
+    private void Move(Vector3 targetDirection)
     {
-        Vector3 targetDirection = new Vector3(xSpeed, ySpeed, 0).normalized;
-        Vector3 targetVelocity = targetDirection * _speed;
+        Vector3 targetVelocity = targetDirection * _currentSpeed;
         if (targetDirection.magnitude > 0)
+        {
             SetSpriteDirection(targetDirection);
+            _currentDirection = targetDirection;
+        }
 
         _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, targetVelocity, ref _currentVelocity, _movementSmoothing);
     }
