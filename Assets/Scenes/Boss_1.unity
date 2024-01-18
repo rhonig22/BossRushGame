@@ -443,7 +443,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.051041294, g: 0.47843137, b: 0.07450981, a: 0}
+  m_BackGroundColor: {r: 0.051041294, g: 0.6392157, b: 0.28235295, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -889,30 +889,6 @@ PrefabInstance:
     - target: {fileID: 2728925027502361445, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5892680474350261106, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5892680474350261106, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -891056955
-      objectReference: {fileID: 0}
-    - target: {fileID: 7754348293673122821, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: _ability1Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7754348293673122821, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: _ability2Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7953929262720806349, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7953929262720806349, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -891056955
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

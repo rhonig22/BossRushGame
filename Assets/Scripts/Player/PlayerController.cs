@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AbilityType _ability1Type = AbilityType.Dodge;
     [SerializeField] private AbilityType _ability2Type = AbilityType.Scratch;
     [SerializeField] private Rigidbody2D _playerRB;
+    [SerializeField] private SpriteRenderer _playerSpriteRenderer;
+    [SerializeField] private Sprite _mouseFront;
+    [SerializeField] private Sprite _mouseSide;
+    [SerializeField] private Sprite _mouseBack;
 
     private void Awake()
     {
@@ -53,14 +57,31 @@ public class PlayerController : MonoBehaviour
         Vector3 targetDirection = new Vector3(xSpeed, ySpeed, 0).normalized;
         Vector3 targetVelocity = targetDirection * _speed;
         if (targetDirection.magnitude > 0)
-            SetRotation(targetDirection);
+            SetSpriteDirection(targetDirection);
 
         _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, targetVelocity, ref _currentVelocity, _movementSmoothing);
     }
 
-    private void SetRotation(Vector3 direction)
+    private void SetSpriteDirection(Vector3 direction)
     {
-        _playerRB.transform.rotation = Quaternion.LookRotation(transform.forward, direction);
+        if (direction.y > 0 && direction.x == 0)
+        {
+            _playerSpriteRenderer.sprite = _mouseBack;
+        }
+        else if (direction.y < 0 && direction.x == 0)
+        {
+            _playerSpriteRenderer.sprite = _mouseFront;
+        }
+        else if (direction.x < 0)
+        {
+            _playerSpriteRenderer.sprite = _mouseSide;
+            _playerSpriteRenderer.flipX = true;
+        }
+        else if (direction.x > 0)
+        {
+            _playerSpriteRenderer.sprite = _mouseSide;
+            _playerSpriteRenderer.flipX = false;
+        }
     }
 
     private void SetAbilities()
