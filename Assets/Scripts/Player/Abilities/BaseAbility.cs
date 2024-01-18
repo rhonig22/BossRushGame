@@ -9,7 +9,7 @@ public class BaseAbility : MonoBehaviour
     protected Rigidbody2D _playerRB;
     protected PlayerController _playerController;
 
-    private void Awake()
+    private void Start()
     {
         _playerRB = GetComponent<Rigidbody2D>();
         _playerController = GetComponent<PlayerController>();

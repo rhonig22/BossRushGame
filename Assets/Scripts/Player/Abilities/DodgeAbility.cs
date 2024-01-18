@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DodgeAbility : BaseAbility
 {
-    private readonly float _dodgeTime = .75f;
+    public static readonly float DodgeTime = .25f;
     private SpriteRenderer[] _spriteRenderers;
 
     private void Awake()
@@ -15,6 +15,7 @@ public class DodgeAbility : BaseAbility
     public override void ActivateAbility()
     {
         base.ActivateAbility();
+        _playerController.PerformDodge();
         foreach (SpriteRenderer renderer in _spriteRenderers)
         {
             renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, .5f);
@@ -25,7 +26,8 @@ public class DodgeAbility : BaseAbility
 
     private IEnumerator EndDodge()
     {
-        yield return new WaitForSeconds(_dodgeTime);
+        yield return new WaitForSeconds(DodgeTime);
+        _playerController.EndDodge();
         foreach (SpriteRenderer renderer in _spriteRenderers)
         {
             renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f);
