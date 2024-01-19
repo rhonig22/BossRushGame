@@ -17,7 +17,13 @@ public class HealthBar : MonoBehaviour
     {
         if (_currentVal != _targetVal)
         {
-            _currentVal = Mathf.MoveTowards(_currentVal, _targetVal, _lerpSpeed * Time.deltaTime);
+        //    _currentVal = Mathf.MoveTowards(_currentVal, _targetVal, _lerpSpeed * Time.deltaTime);
+            if(Mathf.Abs(_currentVal - _targetVal) < 1)
+            {
+                _currentVal = _targetVal;
+            }else{
+                _currentVal = _targetVal + ((_currentVal - _targetVal) / 2);
+            }
         }
 
         Bar.value = _currentVal / _maxVal;
