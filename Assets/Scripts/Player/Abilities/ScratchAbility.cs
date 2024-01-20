@@ -6,13 +6,8 @@ public class ScratchAbility : BaseAbility
 {
     private readonly float _scratchTime = .75f;
     private readonly int _scratchDamage = 20;
-    private PlayerController _playerController;
+    private bool _enemyDamaged = false;
     [SerializeField] private GameObject _scratchArea;
-
-    private void Start()
-    {
-        _playerController = GetComponent<PlayerController>();
-    }
 
     public override void ActivateAbility()
     {
@@ -25,7 +20,11 @@ public class ScratchAbility : BaseAbility
     private IEnumerator EndScratch()
     {
         yield return new WaitForSeconds(_scratchTime);
+        if (!_enemyDamaged)
+            DetectEnemyCollision();
+
         _scratchArea.SetActive(false);
+        _enemyDamaged = false;
     }
 
     private void SetScratchPosition()
@@ -58,6 +57,7 @@ public class ScratchAbility : BaseAbility
             if (collider.CompareTag("Enemy"))
             {
                 collider.GetComponent<BossHealth>().TakeDamage(_scratchDamage);
+                _enemyDamaged = true;
             }
         }
     }
