@@ -10,14 +10,22 @@ using System.Threading;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] Slider Bar;
-    private readonly float _lerpSpeed = 8f;
+    private readonly float _lerpTime = .1f;
+    private float _lerpSpeed = 8f;
     private float _maxVal, _currentVal, _targetVal = 0;
 
     private void Update()
     {
         if (_currentVal != _targetVal)
         {
-            _currentVal = Mathf.MoveTowards(_currentVal, _targetVal, _lerpSpeed * Time.deltaTime);
+            if(Mathf.Abs(_currentVal - _targetVal) < 1)
+            {
+                _currentVal = _targetVal;
+            }
+            else
+            {
+                _currentVal = Mathf.MoveTowards(_currentVal, _targetVal, _lerpSpeed * Time.deltaTime);
+            }
         }
 
         Bar.value = _currentVal / _maxVal;
@@ -33,5 +41,6 @@ public class HealthBar : MonoBehaviour
     public void SetNewVal(float newVal)
     {
         _targetVal = newVal;
+        _lerpSpeed = Mathf.Abs(_currentVal - _targetVal) / _lerpTime;
     }
 }

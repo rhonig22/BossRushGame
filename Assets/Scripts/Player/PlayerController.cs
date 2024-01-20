@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Vector3 CurrentDirection { get; private set; } = Vector2.zero;
     private float _horizontalInput, _verticalInput;
-    private bool _ability1Pressed, _ability2Pressed, _isDodging = false;
+    private bool _ability1Pressed, _ability2Pressed, _isDodging, _isInvincible, _ = false;
     private int _currentSpeed = 8;
     private readonly int _speed = 8;
     private readonly float _movementSmoothing = 0f;
     private Vector2 _currentVelocity = Vector2.zero;
-    private Vector3 _currentDirection = Vector2.zero;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
     [SerializeField] private AbilityType _ability1Type = AbilityType.Dodge;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 targetDirection = new Vector3(_horizontalInput, _verticalInput, 0).normalized;
         if (_isDodging)
-            targetDirection = _currentDirection;
+            targetDirection = CurrentDirection;
 
         Move(targetDirection);
 
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         if (targetDirection.magnitude > 0)
         {
             SetSpriteDirection(targetDirection);
-            _currentDirection = targetDirection;
+            CurrentDirection = targetDirection;
         }
 
         _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, targetVelocity, ref _currentVelocity, _movementSmoothing);
