@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite _mouseFront;
     [SerializeField] private Sprite _mouseSide;
     [SerializeField] private Sprite _mouseBack;
+    [SerializeField] private Animator _spriteAnimator;
 
     public void PerformDodge()
     {
@@ -73,6 +74,16 @@ public class PlayerController : MonoBehaviour
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+        
+        // Animator updates; does not rewrite direction on zero to avoid changing sprite direction when input is released
+        if(_horizontalInput != 0 || _verticalInput != 0){
+            _spriteAnimator.SetBool("isWalking", true);
+            _spriteAnimator.SetFloat("XInput", _horizontalInput);
+            _spriteAnimator.SetFloat("YInput", _verticalInput);
+        }else{
+            _spriteAnimator.SetBool("isWalking", false);
+        }
+        
         if (Input.GetButtonDown("Ability1"))
             _ability1Pressed = true;
 
@@ -100,35 +111,14 @@ public class PlayerController : MonoBehaviour
         Vector3 targetVelocity = targetDirection * _currentSpeed;
         if (targetDirection.magnitude > 0)
         {
+            /*  Flag for deletion. Currently changing sprite direction as a blend tree in the animator - we can do this as an animator parametre if needed
             if (!_inPushback)
                 SetSpriteDirection(targetDirection);
-
+            */
             CurrentDirection = targetDirection;
         }
 
         _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, targetVelocity, ref _currentVelocity, _movementSmoothing);
-    }
-
-    private void SetSpriteDirection(Vector3 direction)
-    {
-        if (direction.y > 0 && direction.x == 0)
-        {
-            _playerSpriteRenderer.sprite = _mouseBack;
-        }
-        else if (direction.y < 0 && direction.x == 0)
-        {
-            _playerSpriteRenderer.sprite = _mouseFront;
-        }
-        else if (direction.x < 0)
-        {
-            _playerSpriteRenderer.sprite = _mouseSide;
-            _playerSpriteRenderer.flipX = true;
-        }
-        else if (direction.x > 0)
-        {
-            _playerSpriteRenderer.sprite = _mouseSide;
-            _playerSpriteRenderer.flipX = false;
-        }
     }
 
     private void SetAbilities()

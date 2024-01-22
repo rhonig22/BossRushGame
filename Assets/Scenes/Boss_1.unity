@@ -667,6 +667,11 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!95 &965941609 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8579852582378233415, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+  m_PrefabInstance: {fileID: 8838877300297032269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1211555501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -778,7 +783,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6415094, g: 0.6117832, b: 0.45692417, a: 0}
+  m_BackGroundColor: {r: 0.7264151, g: 0.6030338, b: 0.34607512, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1296,6 +1301,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5892680474350261106, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1649805671, guid: afa332984ba9340c0a216e7786f29219, type: 3}
+    - target: {fileID: 5892680474350261106, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6754060423843759938, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -1320,6 +1333,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7754348293673122821, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+      propertyPath: _spriteAnimator
+      value: 
+      objectReference: {fileID: 965941609}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
