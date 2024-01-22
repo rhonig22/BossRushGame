@@ -60,10 +60,7 @@ MonoBehaviour:
   _ability2Type: 0
   _playerRB: {fileID: 4612184342884935131}
   _playerSpriteRenderer: {fileID: 5892680474350261106}
-  _mouseFront: {fileID: 1208655353, guid: dfefb4015bb20a146b916cb8c1b3458e, type: 3}
-  _mouseSide: {fileID: 1421508310, guid: dfefb4015bb20a146b916cb8c1b3458e, type: 3}
-  _mouseBack: {fileID: 225117951, guid: dfefb4015bb20a146b916cb8c1b3458e, type: 3}
-  _spriteAnimator: {fileID: 0}
+  _spriteAnimator: {fileID: 8579852582378233415}
 --- !u!114 &2816733723852462342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +261,7 @@ SpriteRenderer:
   m_SortingLayerID: -891056955
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 225117951, guid: dfefb4015bb20a146b916cb8c1b3458e, type: 3}
+  m_Sprite: {fileID: -1649805671, guid: afa332984ba9340c0a216e7786f29219, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

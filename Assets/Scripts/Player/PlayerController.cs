@@ -20,9 +20,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AbilityType _ability2Type = AbilityType.Scratch;
     [SerializeField] private Rigidbody2D _playerRB;
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
-    [SerializeField] private Sprite _mouseFront;
-    [SerializeField] private Sprite _mouseSide;
-    [SerializeField] private Sprite _mouseBack;
     [SerializeField] private Animator _spriteAnimator;
 
     public void PerformDodge()
@@ -74,15 +71,8 @@ public class PlayerController : MonoBehaviour
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
-        
-        // Animator updates; does not rewrite direction on zero to avoid changing sprite direction when input is released
-        if(_horizontalInput != 0 || _verticalInput != 0){
-            _spriteAnimator.SetBool("isWalking", true);
-            _spriteAnimator.SetFloat("XInput", _horizontalInput);
-            _spriteAnimator.SetFloat("YInput", _verticalInput);
-        }else{
-            _spriteAnimator.SetBool("isWalking", false);
-        }
+
+        SetSpriteAnimations(_horizontalInput, _verticalInput);
         
         if (Input.GetButtonDown("Ability1"))
             _ability1Pressed = true;
@@ -106,15 +96,26 @@ public class PlayerController : MonoBehaviour
             ActivateAbility2();
     }
 
+    private void SetSpriteAnimations(float horizontalInput, float verticalInput)
+    {
+        // Animator updates; does not rewrite direction on zero to avoid changing sprite direction when input is released
+        if (_horizontalInput != 0 || _verticalInput != 0)
+        {
+            _spriteAnimator.SetBool("isWalking", true);
+            _spriteAnimator.SetFloat("XInput", horizontalInput);
+            _spriteAnimator.SetFloat("YInput", verticalInput);
+        }
+        else
+        {
+            _spriteAnimator.SetBool("isWalking", false);
+        }
+    }
+
     private void Move(Vector3 targetDirection)
     {
         Vector3 targetVelocity = targetDirection * _currentSpeed;
         if (targetDirection.magnitude > 0)
         {
-            /*  Flag for deletion. Currently changing sprite direction as a blend tree in the animator - we can do this as an animator parametre if needed
-            if (!_inPushback)
-                SetSpriteDirection(targetDirection);
-            */
             CurrentDirection = targetDirection;
         }
 
