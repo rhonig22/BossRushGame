@@ -13,14 +13,16 @@ public class BossHealth : MonoBehaviour
     void Start()
     {
         Health = _initialHealth;
-        _healthBar.SetInitialVal(Health);
+        if (_healthBar != null )
+            _healthBar.SetInitialVal(Health);
         _bossController = GetComponent<BaseBossController>();
     }
 
     public void TakeDamage(int damage)
     {
         Health -= damage;
-        _healthBar.SetNewVal(Health);
+        if (_healthBar != null)
+            _healthBar.SetNewVal(Health);
         _bossController.Takehit();
     }
 }
