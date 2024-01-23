@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         _inPushback = true;
         CurrentDirection = direction;
-        _currentSpeed *= _dodgeMultiplier;
+        _currentSpeed *= _pushbackMultiplier;
         triggerScreenShake.Invoke();
         StartCoroutine(EndPushback(time));
     }
