@@ -8,7 +8,7 @@ public class ScratchAbility : BaseAbility
     private readonly int _scratchDamage = 20;
     private bool _enemyDamaged = false;
     [SerializeField] private GameObject _scratchArea;
-
+    [SerializeField] private Animator _spriteAnimator;
     public override void ActivateAbility()
     {
         base.ActivateAbility();
@@ -16,6 +16,8 @@ public class ScratchAbility : BaseAbility
         _scratchArea.SetActive(true);
         DetectEnemyCollision();
         StartCoroutine(EndScratch());
+        Debug.Log(_spriteAnimator);
+        _spriteAnimator.SetTrigger("attack_scratch");
     }
     private IEnumerator EndScratch()
     {

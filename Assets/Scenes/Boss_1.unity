@@ -489,6 +489,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 1474847522}
+--- !u!95 &669573260 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8579852582378233415, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+  m_PrefabInstance: {fileID: 8838877300297032269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747360101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,7 +1301,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4593018082828582595, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919248191606283750, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
+      propertyPath: _spriteAnimator
+      value: 
+      objectReference: {fileID: 669573260}
+    m_RemovedComponents:
+    - {fileID: 4593018082828582595, guid: cae6e44c029bc144791b37ecd0522dd2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
