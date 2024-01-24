@@ -10,11 +10,11 @@ public class FrogBossController : BaseBossController
     [SerializeField] private GameObject _bubble;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
-        { FrogAttackType.Proximity, 40 },
-        { FrogAttackType.Bubble, 25 },
-        { FrogAttackType.BubbleStorm, 25 },
-        { FrogAttackType.Bees, 10 },
-        { FrogAttackType.Babies, 0 },
+        { FrogAttackType.Proximity, 25 },
+        { FrogAttackType.Bubble, 40 },
+        { FrogAttackType.BubbleStorm, 10 },
+        { FrogAttackType.Bees, 15 },
+        { FrogAttackType.Babies, 10 },
     };
 
     protected override void Move()
