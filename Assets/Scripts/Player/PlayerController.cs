@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private readonly int _speed = 8, _dodgeMultiplier = 2, _pushbackMultiplier = 2;
     private readonly float _movementSmoothing = 0f;
     private Vector2 _currentVelocity = Vector2.zero;
+    private Vector3 _tempDirection;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
     public UnityEvent triggerScreenShake = new UnityEvent();
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public void TakePushback(float time, Vector3 direction)
     {
         _inPushback = true;
+        _tempDirection = CurrentDirection;
         CurrentDirection = direction;
         _currentSpeed *= _pushbackMultiplier;
         triggerScreenShake.Invoke();
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
         _inPushback = false;
         _currentSpeed = _speed;
+        CurrentDirection = _tempDirection;
     }
 
     private void Awake()

@@ -8,14 +8,14 @@ public class FollowBossController: BaseBossController
     protected override void Start()
     {
         base.Start();
-        _speed = 4f;
+        CurrentSpeed = 4f;
         _enablePause = true;
     }
 
     protected override void Move()
     {
         base.Move();
-        transform.position = Vector3.MoveTowards(_rb.position, _player.position, _speed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(_rb.position, _player.position, CurrentSpeed * Time.fixedDeltaTime);
         _rb.velocity = Vector2.zero;
     }
 

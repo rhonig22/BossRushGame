@@ -22,7 +22,7 @@ public class FrogBossController : BaseBossController
         base.Move();
         _rb.velocity = Vector2.zero;
 
-        transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, _speed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, CurrentSpeed * Time.fixedDeltaTime);
     }
 
     public void DetermineNextAttack()
@@ -43,7 +43,7 @@ public class FrogBossController : BaseBossController
     public void ReturnToIdle()
     {
         _currentAttack = FrogAttackType.Idle;
-        _speed = 0;
+        CurrentSpeed = 0;
         _bossAttackAnimator.SetTrigger("Idle");
     }
 
@@ -66,7 +66,7 @@ public class FrogBossController : BaseBossController
     private void JumpAttack()
     {
         _playerLocation = GameObject.FindWithTag("Player").transform.position;
-        _speed = (_playerLocation - _rb.position).magnitude;
+        CurrentSpeed = (_playerLocation - _rb.position).magnitude;
     }
 
     private void BubbleAttack()

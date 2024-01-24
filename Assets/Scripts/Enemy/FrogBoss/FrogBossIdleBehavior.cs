@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FrogBossIdleBehavior : StateMachineBehaviour
 {
-    private readonly float _attackWaitPeriod = 1f;
+    private readonly float _attackWaitPeriod = 1.5f;
     private readonly float _chanceOfAttack = .4f;
     private float _attackTimer = 0f;
     private FrogBossController _controller;
