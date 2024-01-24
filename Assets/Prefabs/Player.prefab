@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2816733723852462342}
   - component: {fileID: 2567583529981925144}
   - component: {fileID: 4612184342884935131}
-  - component: {fileID: 9059728899386872949}
   - component: {fileID: 6940694917756420952}
   - component: {fileID: 6919248191606283750}
+  - component: {fileID: 6008675544281596377}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -113,8 +113,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &9059728899386872949
-BoxCollider2D:
+--- !u!114 &6940694917756420952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728925027502361445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6384c5f5bca2e3a4790661ad16d1cbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 1
+  Name: Dodge
+--- !u!114 &6919248191606283750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728925027502361445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84b235cbe244b3b4298a325257c331f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  Name: Scratch
+  _scratchArea: {fileID: 7004092480296193558}
+--- !u!70 &6008675544281596377
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -146,47 +175,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &6940694917756420952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728925027502361445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6384c5f5bca2e3a4790661ad16d1cbcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AbilityType: 1
-  Name: Dodge
---- !u!114 &6919248191606283750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728925027502361445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84b235cbe244b3b4298a325257c331f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AbilityType: 0
-  Name: Scratch
-  _scratchArea: {fileID: 7004092480296193558}
+  m_Size: {x: 0.6, y: 1}
+  m_Direction: 0
 --- !u!1 &4072187109260884312
 GameObject:
   m_ObjectHideFlags: 0

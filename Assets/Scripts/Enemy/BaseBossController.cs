@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BaseBossController : MonoBehaviour
 {
-    protected float _speed = 0;
     protected readonly int _damage = 5;
     protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
     protected Transform _player;
@@ -14,6 +13,7 @@ public class BaseBossController : MonoBehaviour
     protected bool _pauseMovement = false;
     [SerializeField] protected Animator _spriteAnimator;
     [SerializeField] protected Animator _bossAttackAnimator;
+    public float CurrentSpeed { get; protected set; } = 0;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -23,7 +23,7 @@ public class BaseBossController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (_pauseMovement)
             return;
