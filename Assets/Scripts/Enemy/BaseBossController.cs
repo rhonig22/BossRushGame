@@ -5,29 +5,35 @@ using UnityEngine;
 
 public class BaseBossController : MonoBehaviour
 {
-    private Transform _player;
-    private float _speed = 4f;
-    private Rigidbody2D _rb;
-    private bool _pauseMovement = false;
-    private readonly int _damage = 5;
-    private readonly float _pushbacktime = .25f, _pauseTime = .5f;
-    [SerializeField] private Animator _spriteAnimator;
+    protected readonly int _damage = 5;
+    protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
+    protected Transform _player;
+    protected Rigidbody2D _rb;
+    protected bool _enablePause = false;
+    protected bool _pauseMovement = false;
+    [SerializeField] protected Animator _spriteAnimator;
+    [SerializeField] protected Animator _bossAttackAnimator;
+    public float CurrentSpeed { get; protected set; } = 0;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         _player = GameObject.FindWithTag("Player").transform;
         _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (_pauseMovement)
             return;
 
-        transform.position = Vector3.MoveTowards(_rb.position, _player.position, _speed * Time.fixedDeltaTime);
-        _rb.velocity = Vector2.zero;
+        Move();
+    }
+
+    protected virtual void Move()
+    {
+
     }
 
     public virtual int DoDamage()
@@ -42,12 +48,15 @@ public class BaseBossController : MonoBehaviour
 
     public virtual void Takehit()
     {
+        if (!_enablePause)
+            return;
+
         _pauseMovement = true;
         _spriteAnimator.SetBool("IsPaused", true);
         StartCoroutine(EndPause());
     }
 
-    private IEnumerator EndPause()
+    protected IEnumerator EndPause()
     {
         yield return new WaitForSeconds(_pauseTime);
         _pauseMovement = false;

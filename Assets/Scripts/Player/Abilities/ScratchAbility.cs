@@ -6,11 +6,15 @@ public class ScratchAbility : BaseAbility
 {
     private readonly float _scratchTime = .75f;
     private readonly int _scratchDamage = 20;
-    private bool _enemyDamaged = false;
+    private bool _enemyDamaged = false, _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
     [SerializeField] private Animator _spriteAnimator;
     public override void ActivateAbility()
     {
+        if (_isScratching)
+            return;
+
+        _isScratching = true;
         base.ActivateAbility();
         SetScratchPosition();
         _scratchArea.SetActive(true);
@@ -27,6 +31,7 @@ public class ScratchAbility : BaseAbility
 
         _scratchArea.SetActive(false);
         _enemyDamaged = false;
+        _isScratching = false;
     }
 
     private void SetScratchPosition()
