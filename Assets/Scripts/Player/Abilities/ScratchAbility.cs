@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ScratchAbility : BaseAbility
 {
-    private readonly float _scratchTime = .75f;
     private readonly int _scratchDamage = 20;
-    private bool _enemyDamaged = false, _isScratching = false;
+    private bool _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
     [SerializeField] private Animator _spriteAnimator;
     public override void ActivateAbility()
@@ -14,23 +13,15 @@ public class ScratchAbility : BaseAbility
         if (_isScratching)
             return;
 
-        _isScratching = true;
         base.ActivateAbility();
+        _isScratching = true;
         SetScratchPosition();
         _scratchArea.SetActive(true);
-        DetectEnemyCollision();
-        StartCoroutine(EndScratch());
-        Debug.Log(_spriteAnimator);
         _spriteAnimator.SetTrigger("attack_scratch");
     }
-    private IEnumerator EndScratch()
+    public void EndScratch()
     {
-        yield return new WaitForSeconds(_scratchTime);
-        if (!_enemyDamaged)
-            DetectEnemyCollision();
-
         _scratchArea.SetActive(false);
-        _enemyDamaged = false;
         _isScratching = false;
     }
 
@@ -39,32 +30,42 @@ public class ScratchAbility : BaseAbility
         var direction = _playerController.CurrentDirection;
         if (Mathf.Abs(direction.x) > 0)
         {
-            _scratchArea.transform.localScale = new Vector3(.5f, 1.5f, 1f);
             if (direction.x < 0)
+            {
                 _scratchArea.transform.localPosition = new Vector3(-.75f, 0, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, -90);
+            }
             else
+            {
                 _scratchArea.transform.localPosition = new Vector3(.75f, 0, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 90);
+            }
         }
         else
         {
-            _scratchArea.transform.localScale = new Vector3(1.5f, .5f, 1f);
             if (direction.y < 0)
+            {
                 _scratchArea.transform.localPosition = new Vector3(0, -.75f, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
             else
+            {
                 _scratchArea.transform.localPosition = new Vector3(0, .75f, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
 
     }
 
-    private void DetectEnemyCollision()
+    public void DetectEnemyCollision()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_scratchArea.transform.position, _scratchArea.transform.localScale, 0, LayerMask.NameToLayer("Enemy"));
+        var capsule = _scratchArea.GetComponent<CapsuleCollider2D>();
+        Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)_scratchArea.transform.position + capsule.offset, capsule.size, CapsuleDirection2D.Vertical, 0, LayerMask.NameToLayer("Enemy"));
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Enemy"))
             {
                 collider.GetComponent<BossHealth>().TakeDamage(_scratchDamage);
-                _enemyDamaged = true;
             }
         }
     }
