@@ -9,6 +9,7 @@ public class BaseBossController : MonoBehaviour
     protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
     protected Transform _player;
     protected Rigidbody2D _rb;
+    protected BossHealth _health;
     protected bool _enablePause = false;
     protected bool _pauseMovement = false;
     [SerializeField] protected Animator _spriteAnimator;
@@ -20,6 +21,8 @@ public class BaseBossController : MonoBehaviour
     {
         _player = GameObject.FindWithTag("Player").transform;
         _rb = GetComponent<Rigidbody2D>();
+        _health = GetComponent<BossHealth>();
+        _health.TriggerDeath.AddListener(() => EnemyDeath());
     }
 
     // Update is called once per frame
@@ -61,5 +64,15 @@ public class BaseBossController : MonoBehaviour
         yield return new WaitForSeconds(_pauseTime);
         _pauseMovement = false;
         _spriteAnimator.SetBool("IsPaused", false);
+    }
+
+    protected virtual void EnemyDeath()
+    {
+        DestroySelf();
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

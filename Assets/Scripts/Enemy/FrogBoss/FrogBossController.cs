@@ -7,6 +7,8 @@ public class FrogBossController : BaseBossController
 {
     private FrogAttackType _currentAttack = FrogAttackType.Idle;
     private Vector2 _playerLocation = Vector2.zero;
+    private readonly int _bubbleStormCount = 5;
+    private readonly float _bubbleDelay = .4f;
     [SerializeField] private GameObject _bubble;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
@@ -23,6 +25,17 @@ public class FrogBossController : BaseBossController
         _rb.velocity = Vector2.zero;
 
         transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, CurrentSpeed * Time.fixedDeltaTime);
+    }
+
+    public override int DoDamage()
+    {
+        switch (_currentAttack)
+        {
+            case FrogAttackType.Proximity:
+                return _damage * 3;
+            default:
+                return _damage;
+        }
     }
 
     public void DetermineNextAttack()
@@ -58,21 +71,82 @@ public class FrogBossController : BaseBossController
             case FrogAttackType.Bubble:
                 BubbleAttack();
                 break;
+            case FrogAttackType.BubbleStorm:
+                BubbleStormAttack();
+                break;
+            case FrogAttackType.Bees:
+                BeesAttack();
+                break;
+            case FrogAttackType.Babies:
+                BabiesAttack();
+                break;
             default:
                 break;
         }
     }
 
-    private void JumpAttack()
+    private void SetPlayerLocation()
     {
         _playerLocation = GameObject.FindWithTag("Player").transform.position;
+    }
+
+    private void JumpAttack()
+    {
+        SetPlayerLocation();
         CurrentSpeed = (_playerLocation - _rb.position).magnitude;
     }
 
     private void BubbleAttack()
     {
-        var bubble = GameObject.Instantiate(_bubble);
-        bubble.transform.position = transform.position + new Vector3(0, -1, 1);
+        SetPlayerLocation();
+        CreateBubbles(1);
+    }
+
+    private void BubbleStormAttack()
+    {
+        SetPlayerLocation();
+        CreateBubbles(_bubbleStormCount);
+    }
+    private void BeesAttack()
+    {
+        SetPlayerLocation();
+    }
+
+    private void BabiesAttack()
+    {
+        SetPlayerLocation();
+    }
+
+    private void CreateBubbles(int count)
+    {
+        var playerDistance = (Vector3)_playerLocation - transform.position;
+        Vector3 spawnPosition = transform.position;
+        Vector3 offset = Vector3.zero;
+        if (Mathf.Abs(playerDistance.x) > Mathf.Abs(playerDistance.x))
+        {
+            spawnPosition += new Vector3(playerDistance.x, 0, 0).normalized;
+            offset = new Vector3(0, .6f, 0);
+        }
+        else
+        {
+            spawnPosition += new Vector3(0, playerDistance.y, 0).normalized;
+            offset = new Vector3(.6f, 0, 0);
+        }
+
+        var flip = -1;
+        List<BubbleController> bubbles = new List<BubbleController>();
+        for (int i = 0; i < count; i++)
+        {
+            var bubble = Instantiate(_bubble);
+            bubble.transform.position = spawnPosition + (offset * (int)((i + 1) / 2) * flip);
+            flip *= -1;
+            bubbles.Add(bubble.GetComponent<BubbleController>());
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            StartCoroutine(bubbles[i].SendBubble(_bubbleDelay * (i + 1)));
+        }
     }
 }
 

@@ -9,7 +9,6 @@ public class FollowBossController: BaseBossController
     {
         base.Start();
         CurrentSpeed = 4f;
-        _enablePause = true;
     }
 
     protected override void Move()
