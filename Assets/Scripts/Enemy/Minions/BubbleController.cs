@@ -31,11 +31,15 @@ public class BubbleController : FollowBossController
     {
         
     }
+    // Remove bubble if the player touches it (will work even if player has immunity frames)
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider != null && collision.collider.CompareTag("Player"))
         {
-            GetComponent<BossHealth>().EnemyDeath();
+            _spriteAnimator.SetTrigger("death");
+            // This is a bad workaround - would love to find a way to trigger EnemyDeath after animation completion
+            Destroy(gameObject, 0.15f);
+            //GetComponent<BossHealth>().EnemyDeath();
         }
     }
 }
