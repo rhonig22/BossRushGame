@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BossHealth : MonoBehaviour
 {
     public int Health { get; private set; } = 0;
+    public UnityEvent TriggerDeath = new UnityEvent();
     private int _initialHealth = 350;
     private BaseBossController _bossController;
     [SerializeField] private HealthBar _healthBar;
@@ -30,11 +32,6 @@ public class BossHealth : MonoBehaviour
             _healthBar.SetNewVal(Health);
         _bossController.Takehit();
         if (Health <= 0)
-            EnemyDeath();
-    }
-
-    public void EnemyDeath()
-    {
-        Destroy(gameObject);
+            TriggerDeath.Invoke();
     }
 }

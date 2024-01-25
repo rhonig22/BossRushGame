@@ -8,33 +8,45 @@ public class BubbleController : FollowBossController
     private Vector3 _startPosition, _endPosition;
     private float _desiredDuration = 1.2f;
     private float _elapsedTime, _percentageComplete;
+    private bool _startMovement = false;
     [SerializeField] private AnimationCurve _curve;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        _enablePause = true;
         GetComponent<BossHealth>().SetMaxHealth(_bubbleHealth);
         _startPosition = transform.position;
-        _endPosition = _player.position;
     }
 
     protected override void Move()
     {
-        _elapsedTime += Time.deltaTime;
-        _percentageComplete = _elapsedTime / _desiredDuration;
-        transform.position = Vector3.Lerp(_startPosition, _endPosition, _curve.Evaluate(_percentageComplete));
+        if (_startMovement)
+        {
+            _elapsedTime += Time.deltaTime;
+            _percentageComplete = _elapsedTime / _desiredDuration;
+            transform.position = Vector3.Lerp(_startPosition, _endPosition, _curve.Evaluate(_percentageComplete));
+        }
     }
+
+    public IEnumerator SendBubble(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        _endPosition = _player.position;
+        _startMovement = true;
+    }
+
     // Remove bubble if the player touches it (will work even if player has immunity frames)
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider != null && collision.collider.CompareTag("Player"))
         {
-            _spriteAnimator.SetTrigger("death");
-            // This is a bad workaround - would love to find a way to trigger EnemyDeath after animation completion
-            Destroy(gameObject, 0.15f);
-            //GetComponent<BossHealth>().EnemyDeath();
+            EnemyDeath();
         }
+    }
+
+    protected override void EnemyDeath()
+    {
+        _spriteAnimator.SetTrigger("death");
     }
 }
