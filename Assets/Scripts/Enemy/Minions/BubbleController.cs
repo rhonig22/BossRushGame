@@ -20,16 +20,11 @@ public class BubbleController : FollowBossController
         _endPosition = _player.position;
     }
 
-    protected override void FixedUpdate()
+    protected override void Move()
     {
         _elapsedTime += Time.deltaTime;
         _percentageComplete = _elapsedTime / _desiredDuration;
         transform.position = Vector3.Lerp(_startPosition, _endPosition, _curve.Evaluate(_percentageComplete));
-    }
-
-    protected override void Move()
-    {
-        
     }
     // Remove bubble if the player touches it (will work even if player has immunity frames)
     private void OnCollisionEnter2D(Collision2D collision)
