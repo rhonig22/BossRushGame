@@ -10,6 +10,7 @@ public class FrogBossController : BaseBossController
     private readonly int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
     [SerializeField] private GameObject _bubble;
+    [SerializeField] private GameObject _bee;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
         { FrogAttackType.Proximity, 25 },
@@ -110,6 +111,7 @@ public class FrogBossController : BaseBossController
     private void BeesAttack()
     {
         SetPlayerLocation();
+        CreateBee();
     }
 
     private void BabiesAttack()
@@ -122,6 +124,7 @@ public class FrogBossController : BaseBossController
         var playerDistance = (Vector3)_playerLocation - transform.position;
         Vector3 spawnPosition = transform.position;
         Vector3 offset = Vector3.zero;
+        // Later: one of these should be playerDistance.y 
         if (Mathf.Abs(playerDistance.x) > Mathf.Abs(playerDistance.x))
         {
             spawnPosition += new Vector3(playerDistance.x, 0, 0).normalized;
@@ -147,6 +150,12 @@ public class FrogBossController : BaseBossController
         {
             StartCoroutine(bubbles[i].SendBubble(_bubbleDelay * (i + 1)));
         }
+    }
+
+    private void CreateBee(){
+        Vector3 spawnPosition = transform.position;
+        var bee = Instantiate(_bee);
+        bee.transform.position = spawnPosition;
     }
 }
 
