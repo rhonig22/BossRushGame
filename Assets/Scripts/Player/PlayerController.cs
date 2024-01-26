@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         CurrentDirection = direction;
         _currentSpeed *= _pushbackMultiplier;
         triggerScreenShake.Invoke();
+        TimeManager.Instance.DoSlowmotion(.05f, 2f);
         StartCoroutine(EndPushback(time));
     }
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isDodging || _inPushback)
+        if (_isDodging || _inPushback || TimeManager.Instance.IsPaused)
             return;
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");

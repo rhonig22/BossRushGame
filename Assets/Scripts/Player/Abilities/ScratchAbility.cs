@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScratchAbility : BaseAbility
 {
-    private readonly int _scratchDamage = 20;
+    private readonly int _scratchDamageMultiplier = 1;
     private bool _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
     [SerializeField] private Animator _spriteAnimator;
@@ -65,7 +65,7 @@ public class ScratchAbility : BaseAbility
         {
             if (collider.CompareTag("Enemy"))
             {
-                collider.GetComponent<BossHealth>().TakeDamage(_scratchDamage);
+                collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(_scratchDamageMultiplier));
             }
         }
     }
