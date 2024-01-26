@@ -5,6 +5,7 @@ using UnityEngine;
 public class beeIdleBehavior : StateMachineBehaviour
 {
     private BeeController _controller;
+    private GameObject _player;
     private Vector2 _playerLocation = Vector2.zero;
     private Vector3 _startPosition, _endPosition;
     private float _elapsedTime, _percentageComplete;
@@ -18,6 +19,7 @@ public class beeIdleBehavior : StateMachineBehaviour
         _controller = animator.GetComponent<BeeController>();
         _startPosition = _controller.transform.position;
         _endPosition = _controller.transform.position;
+        _player = GameObject.FindWithTag("Player");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,7 +27,7 @@ public class beeIdleBehavior : StateMachineBehaviour
     {
         
         // Check if the bee should be angry
-        _playerLocation = GameObject.FindWithTag("Player").transform.position;
+        _playerLocation = _player.transform.position;
         var playerDistance = (Vector3)_playerLocation - _controller.transform.position;
         
         if(playerDistance.magnitude < _angerDistance)
@@ -37,16 +39,19 @@ public class beeIdleBehavior : StateMachineBehaviour
         var destinationDistance = (Vector3)_controller.transform.position - _endPosition;
         if(Mathf.Abs(destinationDistance.magnitude) < 1)
         {
-            _startPosition = _controller.transform.position;
-            float targetX = _startPosition.x + (Random.Range(-100, 100)/50);
-            float targetY = _startPosition.y + (Random.Range(-100, 100)/50);
-            float targetZ = _startPosition.z;
-            _endPosition = new Vector3(targetX, targetY, targetZ);
-
+            _setNewTargetPosition();
             _elapsedTime = 0;
         }
         _elapsedTime += Time.deltaTime;
         _percentageComplete = _elapsedTime / _desiredDuration;
         _controller.transform.position = Vector3.Lerp(_startPosition, _endPosition, _curve.Evaluate(_percentageComplete));
+    }
+    private void _setNewTargetPosition()
+    {
+        _startPosition = _controller.transform.position;
+        float targetX = _startPosition.x + (Random.Range(-100, 100)/50);
+        float targetY = _startPosition.y + (Random.Range(-100, 100)/50);
+        float targetZ = _startPosition.z;
+        _endPosition = new Vector3(targetX, targetY, targetZ);
     }
 }

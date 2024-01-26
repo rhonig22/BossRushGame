@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeeController : FollowBossController
 {
     protected int _beeHealth = 20;
-    public bool isAngry = false;
+    public bool IsAngry = false;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -17,7 +17,7 @@ public class BeeController : FollowBossController
 
     protected override void Move()
     {
-        if(isAngry)
+        if(IsAngry)
         {
             base.Move();
         }

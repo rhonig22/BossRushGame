@@ -9,6 +9,6 @@ public class BeeAngryBehavior : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _controller = animator.GetComponent<BeeController>();
-        _controller.isAngry = true; 
+        _controller.IsAngry = true; 
     }
 }
