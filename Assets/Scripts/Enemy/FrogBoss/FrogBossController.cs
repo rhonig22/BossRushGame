@@ -86,6 +86,12 @@ public class FrogBossController : BaseBossController
         }
     }
 
+    protected override void EnemyDeath()
+    {
+        DestroySelf();
+        GameManager.Instance.DefeatedBoss();
+    }
+
     private void SetPlayerLocation()
     {
         _playerLocation = GameObject.FindWithTag("Player").transform.position;
@@ -124,8 +130,7 @@ public class FrogBossController : BaseBossController
         var playerDistance = (Vector3)_playerLocation - transform.position;
         Vector3 spawnPosition = transform.position;
         Vector3 offset = Vector3.zero;
-        // Later: one of these should be playerDistance.y 
-        if (Mathf.Abs(playerDistance.x) > Mathf.Abs(playerDistance.x))
+        if (Mathf.Abs(playerDistance.x) > Mathf.Abs(playerDistance.y))
         {
             spawnPosition += new Vector3(playerDistance.x, 0, 0).normalized;
             offset = new Vector3(0, .6f, 0);

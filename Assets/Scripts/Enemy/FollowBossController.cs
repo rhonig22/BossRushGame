@@ -20,6 +20,9 @@ public class FollowBossController: BaseBossController
 
     public override void Takehit()
     {
+        if (!_enablePause)
+            return;
+
         _pauseMovement = true;
         _spriteAnimator.SetBool("IsPaused", true);
         StartCoroutine(EndPause());
