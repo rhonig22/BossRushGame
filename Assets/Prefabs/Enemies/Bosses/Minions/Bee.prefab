@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteAnimator: {fileID: -1115205014107361229}
   _bossAttackAnimator: {fileID: 0}
-  isAngry: 0
+  IsAngry: 0
 --- !u!114 &-3877636426582682918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +200,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.03, y: 0.01}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.15

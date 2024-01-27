@@ -33,6 +33,8 @@ public class BeeController : FollowBossController
 
     protected override void EnemyDeath()
     {
+        _pauseMovement = true;
+        _collider.enabled = false;
         _spriteAnimator.SetTrigger("death");
     }
 }
