@@ -9,6 +9,7 @@ public class BaseBossController : MonoBehaviour
     protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
     protected Transform _player;
     protected Rigidbody2D _rb;
+    protected Collider2D _collider;
     protected BossHealth _health;
     protected bool _enablePause = false;
     protected bool _pauseMovement = false;
@@ -21,6 +22,7 @@ public class BaseBossController : MonoBehaviour
     {
         _player = GameObject.FindWithTag("Player").transform;
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
         _health = GetComponent<BossHealth>();
         _health.TriggerDeath.AddListener(() => EnemyDeath());
     }

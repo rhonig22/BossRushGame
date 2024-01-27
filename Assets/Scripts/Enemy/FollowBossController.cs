@@ -14,6 +14,9 @@ public class FollowBossController: BaseBossController
     protected override void Move()
     {
         base.Move();
+        if (_pauseMovement)
+            return;
+
         transform.position = Vector3.MoveTowards(_rb.position, _player.position, CurrentSpeed * Time.fixedDeltaTime);
         _rb.velocity = Vector2.zero;
     }
