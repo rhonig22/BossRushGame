@@ -23,6 +23,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private Animator _spriteAnimator;
 
+    public void SetAbilities(AbilityType[] abilities)
+    {
+        _ability1Type = abilities[0];
+        _ability2Type = abilities[1];
+    }
+
     public void PerformDodge()
     {
         _isDodging = true;

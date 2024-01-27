@@ -204,6 +204,7 @@ MonoBehaviour:
   _spriteAnimator: {fileID: 1898333481941013825}
   _bossAttackAnimator: {fileID: 8602802289736821203}
   _bubble: {fileID: 1657637764847404208, guid: 272b1e529ee1a1d40b34cabcb745d69e, type: 3}
+  _bee: {fileID: 560101193828839161, guid: 9769d4ff79388452286e59be560c4b0f, type: 3}
 --- !u!114 &8080335621123906436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9862d340ed114ad99b46c74ab7b72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerDeath:
+    m_PersistentCalls:
+      m_Calls: []
   _healthBar: {fileID: 0}
 --- !u!50 &7711635601111254666
 Rigidbody2D:
@@ -233,7 +237,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 35781b8e348ad6e4a80625aff7aea895, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -25,13 +25,20 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         _maxHealth = DataManager.Instance.GetMaxHealth();
-        Health = _maxHealth;
-        _healthBar.SetInitialVal(Health);
+        Health = DataManager.Instance.GetHealth();
+        _healthBar.SetInitialVal(_maxHealth);
+        _healthBar.SetNewVal(Health);
     }
 
     public void TakeDamage(int damage)
     {
         Health -= damage;
+        _healthBar.SetNewVal(Health);
+    }
+
+    public void AddHealth(float percent)
+    {
+        Health += Mathf.FloorToInt(percent * _maxHealth);
         _healthBar.SetNewVal(Health);
     }
 }

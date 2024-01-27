@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
 
     private readonly string _roomName = "Boss_{0}";
     private readonly string _endSceneName = "EndScreen";
+    private readonly string _transitionSceneName = "TransitionScreen";
     private readonly int _maxBosses = 1;
     private int _currentRoomId = 1;
+    public int Difficulty { get; private set; } = 1;
 
     private void Awake()
     {
@@ -28,17 +30,21 @@ public class GameManager : MonoBehaviour
     {
         DataManager.Instance.ResetData();
         _currentRoomId = 1;
-        LoadBoss(_currentRoomId);
+        Difficulty = 1;
+        LoadNextBoss();
     }
 
     public void DefeatedBoss()
     {
         _currentRoomId++;
         DataManager.Instance.AddBossDefeated();
-        if (_currentRoomId <= _maxBosses)
-            LoadBoss(_currentRoomId);
-        else
-            EndRun();
+        if (_currentRoomId > _maxBosses)
+        {
+            _currentRoomId -= _maxBosses;
+            Difficulty += 1;
+        }
+
+        LoadRewards();
     }
 
     public void EndRun()
@@ -47,8 +53,14 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(_endSceneName);
     }
 
-    private void LoadBoss(int roomId)
+    public void LoadRewards()
     {
-        SceneManager.LoadScene(_roomName.Replace("{0}", roomId + ""));
+        DataManager.Instance.PauseTimer();
+        SceneManager.LoadScene(_transitionSceneName);
+    }
+
+    public void LoadNextBoss()
+    {
+        SceneManager.LoadScene(_roomName.Replace("{0}", _currentRoomId + ""));
     }
 }
