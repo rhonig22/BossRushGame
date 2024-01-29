@@ -90,4 +90,12 @@ public class DataManager : MonoBehaviour
         AddDamageDealt(damage);
         return damage;
     }
+
+    public AbilityType[] GetAbilities() { return _playerData.Abilities; }
+
+    public void SetAbilities(AbilityType ability1, AbilityType ability2)
+    {
+        _playerData.Abilities[0] = ability1;
+        _playerData.Abilities[1] = ability2;
+    }
 }

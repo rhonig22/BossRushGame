@@ -959,14 +959,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrogBoss
       objectReference: {fileID: 0}
-    - target: {fileID: 7711635601111254666, guid: a57fed9ddeb6be248b0f56f9b93956ca, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7922852212441553363, guid: a57fed9ddeb6be248b0f56f9b93956ca, type: 3}
-      propertyPath: _bee
-      value: 
-      objectReference: {fileID: 560101193828839161, guid: 9769d4ff79388452286e59be560c4b0f, type: 3}
     - target: {fileID: 8080335621123906436, guid: a57fed9ddeb6be248b0f56f9b93956ca, type: 3}
       propertyPath: _healthBar
       value: 

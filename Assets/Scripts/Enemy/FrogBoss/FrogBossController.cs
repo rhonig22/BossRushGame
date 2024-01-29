@@ -57,6 +57,7 @@ public class FrogBossController : BaseBossController
     public void ReturnToIdle()
     {
         _currentAttack = FrogAttackType.Idle;
+        _enablePause = true;
         CurrentSpeed = 0;
         _bossAttackAnimator.SetTrigger("Idle");
     }
@@ -64,6 +65,7 @@ public class FrogBossController : BaseBossController
     public void StartAttack(FrogAttackType attackType)
     {
         _currentAttack = attackType;
+        _enablePause = false;
         switch (attackType)
         {
             case FrogAttackType.Proximity:

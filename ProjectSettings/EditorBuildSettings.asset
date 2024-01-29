@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScreen.unity
     guid: ecbf170545b693943b8c99bb55ccb26b
+  - enabled: 1
+    path: Assets/Scenes/TransitionScreen.unity
+    guid: 5f36bca35f7e5064994c61d5a336e325
   m_configObjects: {}
