@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 CurrentDirection { get; private set; } = Vector2.zero;
     public bool IsInvincible { get; private set; } = false;
     private float _horizontalInput, _verticalInput;
-    private bool _ability1Pressed, _ability2Pressed, _isDodging, _inPushback = false;
+    private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _isJumping, _inPushback = false;
     private int _currentSpeed = 8;
     private readonly int _speed = 8, _dodgeMultiplier = 2, _pushbackMultiplier = 2;
     private readonly float _movementSmoothing = 0f;
@@ -43,6 +43,18 @@ public class PlayerController : MonoBehaviour
         _currentSpeed = _speed;
     }
 
+    public void PerformJump()
+    {
+        _isJumping = true;
+        _horizontalInput = 0;
+        _verticalInput = 0;
+    }
+
+    public void EndJump()
+    {
+        _isJumping = false;
+    }
+
     public void TakePushback(float time, Vector3 direction)
     {
         _inPushback = true;
@@ -70,13 +82,22 @@ public class PlayerController : MonoBehaviour
             _abilityMap.Add(ability.AbilityType, ability);
         }
 
+        var currentAbilities = DataManager.Instance.GetAbilities();
+        _ability1Type = currentAbilities[0];
+        _ability2Type = currentAbilities[1];
         SetAbilities();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isDodging || _inPushback || TimeManager.Instance.IsPaused)
+        if (Input.GetButtonUp("Ability1"))
+            _ability1Ended = true;
+
+        if (Input.GetButtonUp("Ability2"))
+            _ability2Ended = true;
+
+        if (_isDodging || _isJumping || _inPushback || TimeManager.Instance.IsPaused)
             return;
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -94,7 +115,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 targetDirection = new Vector3(_horizontalInput, _verticalInput, 0).normalized;
-        if (_isDodging || _inPushback)
+        if (_isDodging || _isJumping || _inPushback)
             targetDirection = CurrentDirection;
 
         Move(targetDirection);
@@ -104,6 +125,12 @@ public class PlayerController : MonoBehaviour
 
         if (_ability2Pressed)
             ActivateAbility2();
+
+        if (_ability1Ended)
+            EndAbility1();
+
+        if (_ability2Ended)
+            EndAbility2();
     }
 
     private void SetSpriteAnimations(float horizontalInput, float verticalInput)
@@ -150,5 +177,19 @@ public class PlayerController : MonoBehaviour
         _ability2Pressed = false;
         if (_ability2 != null)
             _ability2.ActivateAbility();
+    }
+
+    private void EndAbility1()
+    {
+        _ability1Ended = false;
+        if (_ability1 != null)
+            _ability1.EndAbility();
+    }
+
+    private void EndAbility2()
+    {
+        _ability2Ended = false;
+        if (_ability2 != null)
+            _ability2.EndAbility();
     }
 }

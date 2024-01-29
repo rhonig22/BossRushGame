@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9088498819088148797}
   - component: {fileID: 765920019092175029}
   - component: {fileID: 1418622590885128461}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bubble
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -88,6 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9862d340ed114ad99b46c74ab7b72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerDeath:
+    m_PersistentCalls:
+      m_Calls: []
   _healthBar: {fileID: 0}
 --- !u!50 &450743440779174729
 Rigidbody2D:

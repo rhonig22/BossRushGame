@@ -60,7 +60,7 @@ public class ScratchAbility : BaseAbility
     public void DetectEnemyCollision()
     {
         var capsule = _scratchArea.GetComponent<CapsuleCollider2D>();
-        Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)_scratchArea.transform.position + capsule.offset, capsule.size, CapsuleDirection2D.Vertical, 0, LayerMask.NameToLayer("Enemy"));
+        Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)_scratchArea.transform.position + capsule.offset, capsule.size, CapsuleDirection2D.Vertical, 0);
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Enemy"))

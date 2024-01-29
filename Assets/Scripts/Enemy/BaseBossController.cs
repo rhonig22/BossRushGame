@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BaseBossController : MonoBehaviour
 {
-    protected readonly int _damage = 5;
     protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
     protected Transform _player;
     protected Rigidbody2D _rb;
@@ -13,6 +12,7 @@ public class BaseBossController : MonoBehaviour
     protected BossHealth _health;
     protected bool _enablePause = false;
     protected bool _pauseMovement = false;
+    [SerializeField] protected int _damage = 5;
     [SerializeField] protected Animator _spriteAnimator;
     [SerializeField] protected Animator _bossAttackAnimator;
     public float CurrentSpeed { get; protected set; } = 0;

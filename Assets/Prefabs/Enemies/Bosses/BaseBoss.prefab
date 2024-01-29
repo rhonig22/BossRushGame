@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 1979707813137994405}
   - component: {fileID: 8870006770636130504}
   - component: {fileID: 5662495446811568150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BaseBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteAnimator: {fileID: 6269916443372451014}
+  _bossAttackAnimator: {fileID: 0}
 --- !u!114 &8870006770636130504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9862d340ed114ad99b46c74ab7b72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerDeath:
+    m_PersistentCalls:
+      m_Calls: []
   _healthBar: {fileID: 0}
 --- !u!50 &5662495446811568150
 Rigidbody2D:
