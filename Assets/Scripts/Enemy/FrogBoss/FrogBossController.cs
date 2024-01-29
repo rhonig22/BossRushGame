@@ -7,13 +7,15 @@ public class FrogBossController : BaseBossController
 {
     private FrogAttackType _currentAttack = FrogAttackType.Idle;
     private Vector2 _playerLocation = Vector2.zero;
+    private Vector2 _startJumpLocation, _currentLocation;
     private readonly int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
+    private bool _goingUp = false;
     [SerializeField] private GameObject _bubble;
     [SerializeField] private GameObject _bee;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
-        { FrogAttackType.Proximity, 25 },
+        { FrogAttackType.Proximity, 100 },
         { FrogAttackType.Bubble, 50 },
         { FrogAttackType.BubbleStorm, 10 },
         { FrogAttackType.Bees, 15 },
@@ -26,6 +28,17 @@ public class FrogBossController : BaseBossController
         _rb.velocity = Vector2.zero;
 
         transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, CurrentSpeed * Time.fixedDeltaTime);
+        
+        // Check if the states are correct before calculating jump progress
+        if(_currentAttack == FrogAttackType.Proximity && _goingUp)
+        {
+            _currentLocation = transform.position;   
+            if((_startJumpLocation - _currentLocation).magnitude > ((_startJumpLocation - _playerLocation).magnitude / 2))
+            {
+                _goingUp = false;
+                _bossAttackAnimator.SetTrigger("JumpHalfway");
+            }
+        }
     }
 
     public override int DoDamage()
@@ -102,6 +115,8 @@ public class FrogBossController : BaseBossController
     private void JumpAttack()
     {
         SetPlayerLocation();
+        _startJumpLocation = transform.position;
+        _goingUp = true;
         CurrentSpeed = (_playerLocation - _rb.position).magnitude;
     }
 
