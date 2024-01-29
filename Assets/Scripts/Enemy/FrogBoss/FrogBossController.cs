@@ -14,10 +14,10 @@ public class FrogBossController : BaseBossController
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
         { FrogAttackType.Proximity, 25 },
-        { FrogAttackType.Bubble, 40 },
+        { FrogAttackType.Bubble, 50 },
         { FrogAttackType.BubbleStorm, 10 },
         { FrogAttackType.Bees, 15 },
-        { FrogAttackType.Babies, 10 },
+        { FrogAttackType.Babies, 00 },
     };
 
     protected override void Move()
