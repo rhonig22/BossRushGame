@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8080335621123906436}
   - component: {fileID: 7711635601111254666}
   - component: {fileID: 8602802289736821203}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrogBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -10,11 +10,14 @@ public class TransitionScreenUXManager : MonoBehaviour
     [SerializeField] private GameObject _soldAbility1;
     [SerializeField] private GameObject _soldAbility2;
     [SerializeField] private GameObject _soldHeckaCheese;
+    [SerializeField] private TextMeshProUGUI _ability1Name;
+    [SerializeField] private TextMeshProUGUI _ability2Name;
     private bool _someCheeseSelected = false;
     private bool _rewardSelected = false;
 
     private void Start()
     {
+        SetCurrentAbilities();
     }
 
     public void StartBoss()
@@ -46,6 +49,9 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
+        var abilities = DataManager.Instance.GetAbilities();
+        DataManager.Instance.SetAbilities(abilities[0], AbilityType.Bubble);
+        SetCurrentAbilities();
     }
 
     public void Ability2Selected()
@@ -54,6 +60,9 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
+        var abilities = DataManager.Instance.GetAbilities();
+        DataManager.Instance.SetAbilities(AbilityType.Jump, abilities[1]);
+        SetCurrentAbilities();
     }
 
     private void SomeCheeseSold()
@@ -68,5 +77,12 @@ public class TransitionScreenUXManager : MonoBehaviour
         _soldAbility1.SetActive(true);
         _soldAbility2.SetActive(true);
         _soldHeckaCheese.SetActive(true);
+    }
+
+    private void SetCurrentAbilities()
+    {
+        var abilities = DataManager.Instance.GetAbilities();
+        _ability1Name.text = abilities[0].ToString();
+        _ability2Name.text = abilities[1].ToString();
     }
 }

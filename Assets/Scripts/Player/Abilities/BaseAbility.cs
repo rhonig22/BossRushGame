@@ -19,10 +19,17 @@ public class BaseAbility : MonoBehaviour
     {
 
     }
+
+    public virtual void EndAbility()
+    {
+
+    }
 }
 
 public enum AbilityType
 {
     Scratch = 0,
     Dodge = 1,
+    Bubble = 2,
+    Jump = 3,
 }
