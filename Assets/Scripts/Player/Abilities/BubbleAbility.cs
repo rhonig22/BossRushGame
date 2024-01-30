@@ -6,6 +6,7 @@ public class BubbleAbility : BaseAbility
 {
     [SerializeField] private GameObject _bubble;
     private float _bubbleDelay = 0.25f;
+    private float _magnitude = 6f;
 
     public override void ActivateAbility()
     {
@@ -17,7 +18,8 @@ public class BubbleAbility : BaseAbility
     {
         var bubble = Instantiate(_bubble);
         SetBubblePosition(bubble);
-        StartCoroutine(bubble.GetComponent<BubbleController>().SendBubble(_bubbleDelay));
+        var endPosition = bubble.transform.position + _playerController.CurrentDirection * _magnitude;
+        StartCoroutine(bubble.GetComponent<BubbleController>().SendBubble(_bubbleDelay, endPosition));
     }
 
     private void SetBubblePosition(GameObject bubble)

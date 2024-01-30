@@ -48,11 +48,13 @@ public class PlayerController : MonoBehaviour
         _isJumping = true;
         _horizontalInput = 0;
         _verticalInput = 0;
+        _currentSpeed = 0;
     }
 
     public void EndJump()
     {
         _isJumping = false;
+        _currentSpeed = _speed;
     }
 
     public void TakePushback(float time, Vector3 direction)

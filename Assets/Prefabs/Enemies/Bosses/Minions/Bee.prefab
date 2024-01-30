@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22886f5e6a40344f6ba32bbcb467f802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 5
   _spriteAnimator: {fileID: -1115205014107361229}
   _bossAttackAnimator: {fileID: 0}
   IsAngry: 0
@@ -133,9 +134,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -188394431
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -97889291, guid: 55b82271f84114d608241ff3f33f3519, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -183,7 +184,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

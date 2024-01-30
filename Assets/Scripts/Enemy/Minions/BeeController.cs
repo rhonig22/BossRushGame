@@ -23,16 +23,12 @@ public class BeeController : FollowBossController
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider != null && collision.collider.CompareTag("Player"))
-        {
-
-        }
-    }
-
     protected override void EnemyDeath()
     {
+        if (_isDying)
+            return;
+
+        _isDying = true;
         _pauseMovement = true;
         _collider.enabled = false;
         _spriteAnimator.SetTrigger("death");

@@ -30,14 +30,10 @@ public class BubbleController : FollowBossController
         }
     }
 
-    public IEnumerator SendBubble(float waitTime)
+    public IEnumerator SendBubble(float waitTime, Vector3 endPosition)
     {
         yield return new WaitForSeconds(waitTime);
-        if (_objectToSeek == "Player")
-            _endPosition = _player.position;
-        else
-            _endPosition = GetNearestEnemyPosition();
-
+        _endPosition = endPosition;
         _startMovement = true;
     }
 
@@ -73,6 +69,10 @@ public class BubbleController : FollowBossController
 
     protected override void EnemyDeath()
     {
+        if (_isDying)
+            return;
+
+        _isDying = true;
         _pauseMovement = true;
         _collider.enabled = false;
         _spriteAnimator.SetTrigger("death");

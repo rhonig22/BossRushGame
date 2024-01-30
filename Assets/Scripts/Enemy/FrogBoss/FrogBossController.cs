@@ -155,7 +155,7 @@ public class FrogBossController : BaseBossController
 
         for (int i = 0; i < count; i++)
         {
-            StartCoroutine(bubbles[i].SendBubble(_bubbleDelay * (i + 1)));
+            StartCoroutine(bubbles[i].SendBubble(_bubbleDelay * (i + 1), _playerLocation));
         }
     }
 

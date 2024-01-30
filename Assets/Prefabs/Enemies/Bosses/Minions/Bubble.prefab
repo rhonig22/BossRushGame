@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00afe32d5cbba84faa7c1ad47de29d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 5
   _spriteAnimator: {fileID: 9088498819088148797}
   _bossAttackAnimator: {fileID: 0}
   _curve:
@@ -76,6 +77,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _objectToSeek: Player
 --- !u!114 &6840079356131752923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,9 +180,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -188394431
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 818590783, guid: e052f888e3f3a4def8375265e6cdd6a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

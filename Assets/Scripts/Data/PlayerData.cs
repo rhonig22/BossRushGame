@@ -14,7 +14,7 @@ public class PlayerData
     public int BaseDamage;
     public AbilityType[] Abilities = new AbilityType[2];
 
-    public PlayerData()
+    public PlayerData(AbilityType ability1 = AbilityType.Dodge, AbilityType ability2 = AbilityType.Scratch)
     {
         Name = string.Empty;
         TimePassed = 0;
@@ -23,7 +23,7 @@ public class PlayerData
         Health = 20;
         MaxHealth = 20;
         BaseDamage = 20;
-        Abilities[0] = AbilityType.Dodge;
-        Abilities[1] = AbilityType.Scratch;
+        Abilities[0] = ability1;
+        Abilities[1] = ability2;
     }
 }

@@ -9,6 +9,9 @@ public class DataManager : MonoBehaviour
     private PlayerData _playerData = new PlayerData();
     public float TimePassed { get; private set; } = 0f;
     public bool IsTimeStarted { get; private set; } = false;
+    [SerializeField] private AbilityType _initialAbility1 = AbilityType.Dodge;
+    [SerializeField] private AbilityType _initialAbility2 = AbilityType.Scratch;
+
 
     private void Awake()
     {
@@ -19,6 +22,7 @@ public class DataManager : MonoBehaviour
         }
 
         Instance = this;
+        ResetData();
     }
 
     private void Update()
@@ -40,7 +44,7 @@ public class DataManager : MonoBehaviour
 
     public void ResetData()
     {
-        _playerData = new PlayerData();
+        _playerData = new PlayerData(_initialAbility1, _initialAbility2);
         TimePassed = 0f;
     }
 
