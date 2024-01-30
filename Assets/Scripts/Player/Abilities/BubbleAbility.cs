@@ -12,14 +12,22 @@ public class BubbleAbility : BaseAbility
     {
         base.ActivateAbility();
         CreateBubble();
+        _playerController.HaltMovement();
     }
 
     private void CreateBubble()
     {
         var bubble = Instantiate(_bubble);
+        var bubbleController = bubble.GetComponent<BubbleController>();
+        bubbleController.BubbleSent.AddListener(() => { EndBubble(); });
         SetBubblePosition(bubble);
         var endPosition = bubble.transform.position + _playerController.CurrentDirection * _magnitude;
-        StartCoroutine(bubble.GetComponent<BubbleController>().SendBubble(_bubbleDelay, endPosition));
+        StartCoroutine(bubbleController.SendBubble(_bubbleDelay, endPosition));
+    }
+
+    private void EndBubble()
+    {
+        _playerController.RestoreMovement();
     }
 
     private void SetBubblePosition(GameObject bubble)

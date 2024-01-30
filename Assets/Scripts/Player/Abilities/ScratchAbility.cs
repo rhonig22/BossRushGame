@@ -15,6 +15,7 @@ public class ScratchAbility : BaseAbility
 
         base.ActivateAbility();
         _isScratching = true;
+        _playerController.HaltMovement();
         SetScratchPosition();
         _scratchArea.SetActive(true);
         _spriteAnimator.SetTrigger("attack_scratch");
@@ -23,6 +24,7 @@ public class ScratchAbility : BaseAbility
     {
         _scratchArea.SetActive(false);
         _isScratching = false;
+        _playerController.RestoreMovement();
     }
 
     private void SetScratchPosition()

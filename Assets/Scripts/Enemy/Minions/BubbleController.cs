@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BubbleController : FollowBossController
 {
+    public UnityEvent BubbleSent { get; private set; } = new UnityEvent();
     protected int _bubbleHealth = 20;
     private Vector3 _startPosition, _endPosition;
     private float _desiredDuration = 1.2f;
@@ -33,8 +35,11 @@ public class BubbleController : FollowBossController
     public IEnumerator SendBubble(float waitTime, Vector3 endPosition)
     {
         yield return new WaitForSeconds(waitTime);
+        if (_objectToSeek == "Player")
+            endPosition = _player.position;
         _endPosition = endPosition;
         _startMovement = true;
+        BubbleSent.Invoke();
     }
 
     private Vector3 GetNearestEnemyPosition()

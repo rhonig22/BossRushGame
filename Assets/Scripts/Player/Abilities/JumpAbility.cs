@@ -43,7 +43,7 @@ public class JumpAbility : BaseAbility
         _shadow.SetActive(true);
         _isShadowMoving = true;
         _shadowSpeed = _initialShadowSpeed;
-        _playerController.PerformJump();
+        _playerController.HaltMovement();
     }
 
     public override void EndAbility()
@@ -67,7 +67,7 @@ public class JumpAbility : BaseAbility
     {
         _isJumping = false;
         _collider.excludeLayers = LayerMask.GetMask(_nothingMask);
-        _playerController.EndJump();
+        _playerController.RestoreMovement();
         _shadow.transform.localPosition = Vector3.zero;
     }
 }
