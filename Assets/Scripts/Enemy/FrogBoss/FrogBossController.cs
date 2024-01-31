@@ -15,7 +15,7 @@ public class FrogBossController : BaseBossController
     [SerializeField] private GameObject _bee;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
-        { FrogAttackType.Proximity, 100 },
+        { FrogAttackType.Proximity, 25 },
         { FrogAttackType.Bubble, 50 },
         { FrogAttackType.BubbleStorm, 10 },
         { FrogAttackType.Bees, 15 },
@@ -33,7 +33,6 @@ public class FrogBossController : BaseBossController
         {
             float jumpProgress = (_startJumpLocation - _rb.position).magnitude / (_startJumpLocation - _playerLocation).magnitude;
             _bossAttackAnimator.SetFloat("JumpProgress", jumpProgress);
-            Debug.Log(jumpProgress);
         }
     }
 
