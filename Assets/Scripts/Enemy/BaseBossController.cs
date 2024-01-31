@@ -10,8 +10,7 @@ public class BaseBossController : MonoBehaviour
     protected Rigidbody2D _rb;
     protected Collider2D _collider;
     protected BossHealth _health;
-    protected bool _enablePause = false;
-    protected bool _pauseMovement = false;
+    protected bool _enablePause = false, _pauseMovement = false, _isDying = false;
     [SerializeField] protected int _damage = 5;
     [SerializeField] protected Animator _spriteAnimator;
     [SerializeField] protected Animator _bossAttackAnimator;

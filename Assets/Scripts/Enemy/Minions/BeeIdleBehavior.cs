@@ -49,8 +49,8 @@ public class beeIdleBehavior : StateMachineBehaviour
     private void _setNewTargetPosition()
     {
         _startPosition = _controller.transform.position;
-        float targetX = _startPosition.x + (Random.Range(-100, 100)/50);
-        float targetY = _startPosition.y + (Random.Range(-100, 100)/50);
+        float targetX = Mathf.Clamp(_startPosition.x + (Random.Range(-100, 100)/50), -8.5f, 8.5f);
+        float targetY = Mathf.Clamp(_startPosition.y + (Random.Range(-100, 100)/50), -5.5f, 5.5f);
         float targetZ = _startPosition.z;
         _endPosition = new Vector3(targetX, targetY, targetZ);
     }

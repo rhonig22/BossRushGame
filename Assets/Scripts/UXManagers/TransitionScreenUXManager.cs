@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TransitionScreenUXManager : MonoBehaviour
 {
@@ -12,12 +13,19 @@ public class TransitionScreenUXManager : MonoBehaviour
     [SerializeField] private GameObject _soldHeckaCheese;
     [SerializeField] private TextMeshProUGUI _ability1Name;
     [SerializeField] private TextMeshProUGUI _ability2Name;
+    [SerializeField] private SelectPopupUXManager _selectPopup;
+    [SerializeField] private Button _proceedButton;
     private bool _someCheeseSelected = false;
     private bool _rewardSelected = false;
 
     private void Start()
     {
         SetCurrentAbilities();
+        _selectPopup.Finished.AddListener(() =>
+        {
+            SetCurrentAbilities();
+            _proceedButton.Select();
+        });
     }
 
     public void StartBoss()
@@ -49,9 +57,7 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
-        var abilities = DataManager.Instance.GetAbilities();
-        DataManager.Instance.SetAbilities(abilities[0], AbilityType.Bubble);
-        SetCurrentAbilities();
+        _selectPopup.Open(AbilityType.Bubble);
     }
 
     public void Ability2Selected()
@@ -60,9 +66,7 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
-        var abilities = DataManager.Instance.GetAbilities();
-        DataManager.Instance.SetAbilities(AbilityType.Jump, abilities[1]);
-        SetCurrentAbilities();
+        _selectPopup.Open(AbilityType.Jump);
     }
 
     private void SomeCheeseSold()

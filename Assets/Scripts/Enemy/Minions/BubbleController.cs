@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BubbleController : FollowBossController
 {
+    public UnityEvent BubbleSent { get; private set; } = new UnityEvent();
     protected int _bubbleHealth = 20;
     private Vector3 _startPosition, _endPosition;
     private float _desiredDuration = 1.2f;
@@ -30,15 +32,14 @@ public class BubbleController : FollowBossController
         }
     }
 
-    public IEnumerator SendBubble(float waitTime)
+    public IEnumerator SendBubble(float waitTime, Vector3 endPosition)
     {
         yield return new WaitForSeconds(waitTime);
         if (_objectToSeek == "Player")
-            _endPosition = _player.position;
-        else
-            _endPosition = GetNearestEnemyPosition();
-
+            endPosition = _player.position;
+        _endPosition = endPosition;
         _startMovement = true;
+        BubbleSent.Invoke();
     }
 
     private Vector3 GetNearestEnemyPosition()
@@ -73,6 +74,10 @@ public class BubbleController : FollowBossController
 
     protected override void EnemyDeath()
     {
+        if (_isDying)
+            return;
+
+        _isDying = true;
         _pauseMovement = true;
         _collider.enabled = false;
         _spriteAnimator.SetTrigger("death");
