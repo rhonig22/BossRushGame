@@ -7,8 +7,10 @@ public class FrogBossController : BaseBossController
 {
     private FrogAttackType _currentAttack = FrogAttackType.Idle;
     private Vector2 _playerLocation = Vector2.zero;
+    private Vector2 _startJumpLocation, _currentLocation;
     private readonly int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
+    private readonly float _jumpSpeed = 12f;
     [SerializeField] private GameObject _bubble;
     [SerializeField] private GameObject _bee;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
@@ -26,6 +28,12 @@ public class FrogBossController : BaseBossController
         _rb.velocity = Vector2.zero;
 
         transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, CurrentSpeed * Time.fixedDeltaTime);
+        
+        if(_currentAttack == FrogAttackType.Proximity)
+        {
+            float jumpProgress = (_startJumpLocation - _rb.position).magnitude / (_startJumpLocation - _playerLocation).magnitude;
+            _bossAttackAnimator.SetFloat("JumpProgress", jumpProgress);
+        }
     }
 
     public override int DoDamage()
@@ -102,7 +110,8 @@ public class FrogBossController : BaseBossController
     private void JumpAttack()
     {
         SetPlayerLocation();
-        CurrentSpeed = (_playerLocation - _rb.position).magnitude;
+        _startJumpLocation = _rb.position;
+        CurrentSpeed = _jumpSpeed;
     }
 
     private void BubbleAttack()
