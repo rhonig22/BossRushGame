@@ -81,7 +81,10 @@ public class PlayerController : MonoBehaviour
         {
             _abilityMap.Add(ability.AbilityType, ability);
         }
+    }
 
+    private void Start()
+    {
         var currentAbilities = DataManager.Instance.GetAbilities();
         _ability1Type = currentAbilities[0];
         _ability2Type = currentAbilities[1];
