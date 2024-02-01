@@ -52,7 +52,10 @@ MonoBehaviour:
   _damage: 5
   _spriteAnimator: {fileID: -1115205014107361229}
   _bossAttackAnimator: {fileID: 0}
+  _damagedSound: {fileID: 0}
   IsAngry: 0
+  _beeStart: {fileID: 8300000, guid: f756af4edd11a1e488a114df25871d51, type: 3}
+  _beeDie: {fileID: 8300000, guid: 0d955d76d90cf3b4ea1f07b9eb80930b, type: 3}
 --- !u!114 &-3877636426582682918
 MonoBehaviour:
   m_ObjectHideFlags: 0

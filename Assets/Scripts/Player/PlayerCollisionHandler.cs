@@ -6,6 +6,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 {
     private PlayerHealth _playerHealth;
     private PlayerController _playerController;
+    [SerializeField] private AudioClip _hitSound;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class PlayerCollisionHandler : MonoBehaviour
             BaseBossController boss = collision.gameObject.GetComponent<BaseBossController>();
             _playerHealth.TakeDamage(boss.DoDamage());
             _playerController.TakePushback(boss.GetPushbackTime(), collision.GetContact(0).normal);
+            SoundManager.Instance.PlaySound(_hitSound, transform.position);
         }
     }
 }

@@ -14,6 +14,7 @@ public class BaseBossController : MonoBehaviour
     [SerializeField] protected int _damage = 5;
     [SerializeField] protected Animator _spriteAnimator;
     [SerializeField] protected Animator _bossAttackAnimator;
+    [SerializeField] private AudioClip _damagedSound;
     public float CurrentSpeed { get; protected set; } = 0;
 
     // Start is called before the first frame update
@@ -57,6 +58,7 @@ public class BaseBossController : MonoBehaviour
 
         _pauseMovement = true;
         _spriteAnimator.SetBool("IsPaused", true);
+        SoundManager.Instance.PlaySound(_damagedSound, transform.position);
         StartCoroutine(EndPause());
     }
 

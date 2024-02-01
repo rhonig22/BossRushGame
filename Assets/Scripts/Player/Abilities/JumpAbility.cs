@@ -15,6 +15,8 @@ public class JumpAbility : BaseAbility
     private Vector3 _endPosition = Vector3.zero;
     [SerializeField] private GameObject _mouse;
     [SerializeField] private GameObject _shadow;
+    [SerializeField] private AudioClip _startJumpSound;
+    [SerializeField] private AudioClip _endJumpSound;
 
     private void Awake()
     {
@@ -44,6 +46,7 @@ public class JumpAbility : BaseAbility
         _isShadowMoving = true;
         _shadowSpeed = _initialShadowSpeed;
         _playerController.HaltMovement();
+        SoundManager.Instance.PlaySound(_startJumpSound, transform.position);
     }
 
     public override void EndAbility()
@@ -61,6 +64,7 @@ public class JumpAbility : BaseAbility
         _collider.excludeLayers = LayerMask.GetMask(_enemyMask);
         _endPosition = _shadow.transform.position;
         _jumpSpeed = (_endPosition - transform.position).magnitude / _jumpTime;
+        SoundManager.Instance.PlaySound(_endJumpSound, transform.position);
     }
 
     private void EndJump()

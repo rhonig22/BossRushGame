@@ -8,6 +8,8 @@ public class ScratchAbility : BaseAbility
     private bool _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
     [SerializeField] private Animator _spriteAnimator;
+    [SerializeField] private AudioClip _scratchMiss;
+    [SerializeField] private AudioClip _scratchHit;
     public override void ActivateAbility()
     {
         if (_isScratching)
@@ -63,12 +65,16 @@ public class ScratchAbility : BaseAbility
     {
         var capsule = _scratchArea.GetComponent<CapsuleCollider2D>();
         Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)_scratchArea.transform.position + capsule.offset, capsule.size, CapsuleDirection2D.Vertical, 0);
+        bool hit = false;
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Enemy"))
             {
                 collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(_scratchDamageMultiplier));
+                hit = true;
             }
         }
+
+        SoundManager.Instance.PlaySound(hit ? _scratchHit : _scratchMiss, transform.position);
     }
 }

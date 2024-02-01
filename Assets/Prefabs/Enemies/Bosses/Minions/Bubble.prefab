@@ -53,6 +53,7 @@ MonoBehaviour:
   _damage: 5
   _spriteAnimator: {fileID: 9088498819088148797}
   _bossAttackAnimator: {fileID: 0}
+  _damagedSound: {fileID: 0}
   _curve:
     serializedVersion: 2
     m_Curve:
@@ -78,6 +79,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _objectToSeek: Player
+  _bubbleStart: {fileID: 8300000, guid: 983cee1690e8a0344a898cc86bc32e9e, type: 3}
+  _bubblePop: {fileID: 8300000, guid: 15338f4ebed8e9d4586ddbb2e3045f30, type: 3}
 --- !u!114 &6840079356131752923
 MonoBehaviour:
   m_ObjectHideFlags: 0

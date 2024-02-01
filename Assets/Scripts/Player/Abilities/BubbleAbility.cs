@@ -5,6 +5,7 @@ using UnityEngine;
 public class BubbleAbility : BaseAbility
 {
     [SerializeField] private GameObject _bubble;
+    [SerializeField] private AudioClip _bubbleSpitSound;
     private float _bubbleDelay = 0.25f;
     private float _magnitude = 6f;
 
@@ -22,6 +23,7 @@ public class BubbleAbility : BaseAbility
         bubbleController.BubbleSent.AddListener(() => { EndBubble(); });
         SetBubblePosition(bubble);
         var endPosition = bubble.transform.position + _playerController.CurrentDirection * _magnitude;
+        SoundManager.Instance.PlaySound(_bubbleSpitSound, transform.position);
         StartCoroutine(bubbleController.SendBubble(_bubbleDelay, endPosition));
     }
 
