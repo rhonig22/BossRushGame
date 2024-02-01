@@ -160,8 +160,14 @@ MonoBehaviour:
   _damage: 5
   _spriteAnimator: {fileID: 1898333481941013825}
   _bossAttackAnimator: {fileID: 8602802289736821203}
+  _damagedSound: {fileID: 8300000, guid: 507c4e0b59f6bbc4683f01544146ef49, type: 3}
   _bubble: {fileID: 1657637764847404208, guid: 272b1e529ee1a1d40b34cabcb745d69e, type: 3}
   _bee: {fileID: 560101193828839161, guid: 9769d4ff79388452286e59be560c4b0f, type: 3}
+  _winceSound: {fileID: 8300000, guid: c56a3361bf5696d47bbe534b15a86132, type: 3}
+  _roarSound: {fileID: 8300000, guid: 0a2b6e1b004e9ca4c88e2e44646b6dc4, type: 3}
+  _littleSpitSound: {fileID: 8300000, guid: c3f010f589948e242a0b7cc962e3ce30, type: 3}
+  _bigSpitSound: {fileID: 8300000, guid: 08db7e828c1cd1d46bcec09834b517f8, type: 3}
+  _landingSound: {fileID: 8300000, guid: 96ac9e353f134004f86aafffe0cf64cc, type: 3}
 --- !u!114 &8080335621123906436
 MonoBehaviour:
   m_ObjectHideFlags: 0

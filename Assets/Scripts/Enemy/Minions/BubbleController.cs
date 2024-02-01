@@ -11,8 +11,11 @@ public class BubbleController : FollowBossController
     private float _desiredDuration = 1.2f;
     private float _elapsedTime, _percentageComplete;
     private bool _startMovement = false;
+    private IEnumerator _bubbleCoroutine = null;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private string _objectToSeek = "Player";
+    [SerializeField] private AudioClip _bubbleStart;
+    [SerializeField] private AudioClip _bubblePop;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -39,7 +42,13 @@ public class BubbleController : FollowBossController
             endPosition = _player.position;
         _endPosition = endPosition;
         _startMovement = true;
+        SoundManager.Instance.PlaySound(_bubbleStart, transform.position);
         BubbleSent.Invoke();
+    }
+
+    public void SetBubbleCoroutine(IEnumerator bubbleCoroutine)
+    {
+        _bubbleCoroutine = bubbleCoroutine;
     }
 
     private Vector3 GetNearestEnemyPosition()
@@ -80,6 +89,10 @@ public class BubbleController : FollowBossController
         _isDying = true;
         _pauseMovement = true;
         _collider.enabled = false;
+        SoundManager.Instance.PlaySound(_bubblePop, transform.position);
+        if (_bubbleCoroutine != null)
+            StopCoroutine(_bubbleCoroutine);
+
         _spriteAnimator.SetTrigger("death");
     }
 }

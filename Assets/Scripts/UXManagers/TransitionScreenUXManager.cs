@@ -15,6 +15,7 @@ public class TransitionScreenUXManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _ability2Name;
     [SerializeField] private SelectPopupUXManager _selectPopup;
     [SerializeField] private Button _proceedButton;
+    [SerializeField] private AudioClip _cheeseEatingSound;
     private bool _someCheeseSelected = false;
     private bool _rewardSelected = false;
 
@@ -40,6 +41,7 @@ public class TransitionScreenUXManager : MonoBehaviour
 
         SomeCheeseSold();
         _playerHealth.AddHealth(.25f);
+        SoundManager.Instance.PlaySound(_cheeseEatingSound, transform.position);
     }
 
     public void HeckaCheeseSelected()
@@ -49,6 +51,7 @@ public class TransitionScreenUXManager : MonoBehaviour
 
         RewardSold();
         _playerHealth.AddHealth(1f);
+        SoundManager.Instance.PlaySound(_cheeseEatingSound, transform.position);
     }
 
     public void Ability1Selected()

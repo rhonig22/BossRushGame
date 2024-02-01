@@ -13,6 +13,11 @@ public class FrogBossController : BaseBossController
     private readonly float _jumpSpeed = 12f;
     [SerializeField] private GameObject _bubble;
     [SerializeField] private GameObject _bee;
+    [SerializeField] private AudioClip _winceSound;
+    [SerializeField] private AudioClip _roarSound;
+    [SerializeField] private AudioClip _littleSpitSound;
+    [SerializeField] private AudioClip _bigSpitSound;
+    [SerializeField] private AudioClip _landingSound;
     public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
         { FrogAttackType.Proximity, 25 },
@@ -34,6 +39,31 @@ public class FrogBossController : BaseBossController
             float jumpProgress = (_startJumpLocation - _rb.position).magnitude / (_startJumpLocation - _playerLocation).magnitude;
             _bossAttackAnimator.SetFloat("JumpProgress", jumpProgress);
         }
+    }
+
+    public void PlayWinceSound()
+    {
+        SoundManager.Instance.PlaySound(_winceSound, transform.position);
+    }
+
+    public void PlayRoarSound()
+    {
+        SoundManager.Instance.PlaySound(_roarSound, transform.position);
+    }
+
+    public void PlayLittleSpitSound()
+    {
+        SoundManager.Instance.PlaySound(_littleSpitSound, transform.position);
+    }
+
+    public void PlayBigSpitSound()
+    {
+        SoundManager.Instance.PlaySound(_bigSpitSound, transform.position);
+    }
+
+    public void PlayLandingSound()
+    {
+        SoundManager.Instance.PlaySound(_landingSound, transform.position);
     }
 
     public override int DoDamage()
@@ -117,17 +147,20 @@ public class FrogBossController : BaseBossController
     private void BubbleAttack()
     {
         SetPlayerLocation();
+        PlayLittleSpitSound();
         CreateBubbles(1);
     }
 
     private void BubbleStormAttack()
     {
         SetPlayerLocation();
+        PlayBigSpitSound();
         CreateBubbles(_bubbleStormCount);
     }
     private void BeesAttack()
     {
         SetPlayerLocation();
+        PlayLittleSpitSound();
         CreateBee();
     }
 
@@ -164,7 +197,9 @@ public class FrogBossController : BaseBossController
 
         for (int i = 0; i < count; i++)
         {
-            StartCoroutine(bubbles[i].SendBubble(_bubbleDelay * (i + 1), _playerLocation));
+            var bubbleCoroutine = bubbles[i].SendBubble(_bubbleDelay * (i + 1), _playerLocation);
+            bubbles[i].SetBubbleCoroutine(bubbleCoroutine);
+            StartCoroutine(bubbleCoroutine);
         }
     }
 
