@@ -11,7 +11,6 @@ public class BubbleController : FollowBossController
     private float _desiredDuration = 1.2f;
     private float _elapsedTime, _percentageComplete;
     private bool _startMovement = false;
-    private IEnumerator _bubbleCoroutine = null;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private string _objectToSeek = "Player";
     [SerializeField] private AudioClip _bubbleStart;
@@ -35,36 +34,21 @@ public class BubbleController : FollowBossController
         }
     }
 
-    public IEnumerator SendBubble(float waitTime, Vector3 endPosition)
+    public void SendBubbleWithDelay(float waitTime, Vector3 endPosition)
+    {
+        StartCoroutine(SendBubble(waitTime, endPosition));
+    }
+
+    private IEnumerator SendBubble(float waitTime, Vector3 endPosition)
     {
         yield return new WaitForSeconds(waitTime);
         if (_objectToSeek == "Player")
             endPosition = _player.position;
         _endPosition = endPosition;
         _startMovement = true;
-        SoundManager.Instance.PlaySound(_bubbleStart, transform.position);
+        var soundPosition = transform.position;
+        SoundManager.Instance.PlaySound(_bubbleStart, soundPosition);
         BubbleSent.Invoke();
-    }
-
-    public void SetBubbleCoroutine(IEnumerator bubbleCoroutine)
-    {
-        _bubbleCoroutine = bubbleCoroutine;
-    }
-
-    private Vector3 GetNearestEnemyPosition()
-    {
-        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length == 0)
-            return Vector3.zero;
-
-        Vector3 closestEnemyPosition = enemies[0].transform.position;
-        foreach (var enemy in enemies)
-        {
-            if ((enemy.transform.position - transform.position).magnitude > (closestEnemyPosition - transform.position).magnitude)
-                closestEnemyPosition = enemy.transform.position;
-        }
-
-        return closestEnemyPosition;
     }
 
     // Remove bubble if the player touches it (will work even if player has immunity frames)
@@ -90,9 +74,6 @@ public class BubbleController : FollowBossController
         _pauseMovement = true;
         _collider.enabled = false;
         SoundManager.Instance.PlaySound(_bubblePop, transform.position);
-        if (_bubbleCoroutine != null)
-            StopCoroutine(_bubbleCoroutine);
-
         _spriteAnimator.SetTrigger("death");
     }
 }

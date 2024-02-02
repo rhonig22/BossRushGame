@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BossRoomUXManager : MonoBehaviour
 {
-    [SerializeField] private GameTimer gameTimer;
+    [SerializeField] private CutSceneManager _cutSceneManager;
 
     private void Start()
     {
-        DataManager.Instance.StartTimer();
+        _cutSceneManager.Play();
     }
 }
