@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public class PlayerHealth : MonoBehaviour
             DataManager.Instance.SetHealth(_health);
             if (_health == 0)
             {
-                GameManager.Instance.EndRun();
+                TriggerDeath.Invoke();
             }
         }
     }
 
+    public UnityEvent TriggerDeath { get; private set; } = new UnityEvent();
     private int _health = 0;
     private int _maxHealth = 0;
     [SerializeField] private HealthBar _healthBar;

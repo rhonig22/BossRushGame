@@ -8,6 +8,7 @@ public class FrogBossController : BaseBossController
     private FrogAttackType _currentAttack = FrogAttackType.Idle;
     private Vector2 _playerLocation = Vector2.zero;
     private Vector2 _startJumpLocation, _currentLocation;
+    private bool _isDead = false;
     private readonly int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
     private readonly float _jumpSpeed = 12f;
@@ -128,8 +129,13 @@ public class FrogBossController : BaseBossController
 
     protected override void EnemyDeath()
     {
-        DestroySelf();
+        if (_isDead)
+            return;
+
+        _isDead = true;
         GameManager.Instance.DefeatedBoss();
+        SoundManager.Instance.PlaySound(_roarSound, transform.position);
+        _bossAttackAnimator.SetTrigger("Death");
     }
 
     private void SetPlayerLocation()
@@ -197,9 +203,7 @@ public class FrogBossController : BaseBossController
 
         for (int i = 0; i < count; i++)
         {
-            var bubbleCoroutine = bubbles[i].SendBubble(_bubbleDelay * (i + 1), _playerLocation);
-            bubbles[i].SetBubbleCoroutine(bubbleCoroutine);
-            StartCoroutine(bubbleCoroutine);
+            bubbles[i].SendBubbleWithDelay(_bubbleDelay * (i + 1), _playerLocation);
         }
     }
 

@@ -8,12 +8,13 @@ public class PlayerController : MonoBehaviour
     public Vector3 CurrentDirection { get; private set; } = Vector2.zero;
     public bool IsInvincible { get; private set; } = false;
     private float _horizontalInput, _verticalInput;
-    private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _inPushback = false;
+    private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _isDead, _inPushback = false;
     private int _currentSpeed = 8;
     private readonly int _speed = 8, _dodgeMultiplier = 2, _pushbackMultiplier = 2;
     private readonly float _movementSmoothing = 0f;
     private Vector2 _currentVelocity = Vector2.zero;
     private Vector3 _tempDirection;
+    private PlayerHealth _playerHealth;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
     public UnityEvent triggerScreenShake = new UnityEvent();
@@ -22,6 +23,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D _playerRB;
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private Animator _spriteAnimator;
+    [SerializeField] private AudioClip _playerDeathClip;
+
+    private void Awake()
+    {
+        BaseAbility[] abilities = GetComponentsInChildren<BaseAbility>();
+        foreach (BaseAbility ability in abilities)
+        {
+            _abilityMap.Add(ability.AbilityType, ability);
+        }
+    }
+
+    private void Start()
+    {
+        _playerHealth = GetComponent<PlayerHealth>();
+        _playerHealth.TriggerDeath.AddListener(() => { PlayerDeath(); });
+        var currentAbilities = DataManager.Instance.GetAbilities();
+        _ability1Type = currentAbilities[0];
+        _ability2Type = currentAbilities[1];
+        SetAbilities();
+    }
 
     public void SetAbilities(AbilityType[] abilities)
     {
@@ -74,23 +95,6 @@ public class PlayerController : MonoBehaviour
         CurrentDirection = _tempDirection;
     }
 
-    private void Awake()
-    {
-        BaseAbility[] abilities = GetComponentsInChildren<BaseAbility>();
-        foreach (BaseAbility ability in abilities)
-        {
-            _abilityMap.Add(ability.AbilityType, ability);
-        }
-    }
-
-    private void Start()
-    {
-        var currentAbilities = DataManager.Instance.GetAbilities();
-        _ability1Type = currentAbilities[0];
-        _ability2Type = currentAbilities[1];
-        SetAbilities();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -100,7 +104,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonUp("Ability2"))
             _ability2Ended = true;
 
-        if (_isDodging || _noMovement || _inPushback || TimeManager.Instance.IsPaused)
+        if (_isDodging || _noMovement || _isDead || _inPushback || TimeManager.Instance.IsPaused)
             return;
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -117,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isDead) return;
+
         Vector3 targetDirection = new Vector3(_horizontalInput, _verticalInput, 0).normalized;
         if (_isDodging || _noMovement || _inPushback)
             targetDirection = CurrentDirection;
@@ -194,5 +200,16 @@ public class PlayerController : MonoBehaviour
         _ability2Ended = false;
         if (_ability2 != null)
             _ability2.EndAbility();
+    }
+
+    private void PlayerDeath()
+    {
+        if (_isDead)
+            return;
+
+        _isDead = true;
+        _spriteAnimator.SetTrigger("Death");
+        SoundManager.Instance.PlaySound(_playerDeathClip, transform.position);
+        GameManager.Instance.EndRun();
     }
 }

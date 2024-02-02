@@ -24,7 +24,7 @@ public class BubbleAbility : BaseAbility
         SetBubblePosition(bubble);
         var endPosition = bubble.transform.position + _playerController.CurrentDirection * _magnitude;
         SoundManager.Instance.PlaySound(_bubbleSpitSound, transform.position);
-        StartCoroutine(bubbleController.SendBubble(_bubbleDelay, endPosition));
+        bubbleController.SendBubbleWithDelay(_bubbleDelay, endPosition);
     }
 
     private void EndBubble()

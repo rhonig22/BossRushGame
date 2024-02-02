@@ -76,6 +76,7 @@ public class BaseBossController : MonoBehaviour
 
     public void DestroySelf()
     {
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 }

@@ -5625,6 +5625,14 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5132679776177561028, guid: 48b2b52a8f11b6543aaa6290c8b69465, type: 3}
+      propertyPath: arrangementTransition.timing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132679776177561028, guid: 48b2b52a8f11b6543aaa6290c8b69465, type: 3}
+      propertyPath: arrangementTransition.duration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132679776177561028, guid: 48b2b52a8f11b6543aaa6290c8b69465, type: 3}
       propertyPath: arrangementTransition.returnToPrevious
       value: 0
       objectReference: {fileID: 0}
