@@ -10,6 +10,7 @@ public class CutSceneManager : MonoBehaviour
     [SerializeField] private AudioClip _emphasis2;
     [SerializeField] private AudioClip _emphasis3;
     [SerializeField] private AudioClip _bell;
+    [SerializeField] private MusicTrackPlayer _musicPlayer;
 
     public void Play()
     {
@@ -23,6 +24,7 @@ public class CutSceneManager : MonoBehaviour
         DataManager.Instance.StartTimer();
         TimeManager.Instance.Pause(false);
         SoundManager.Instance.PlaySound(_bell, transform.position);
+        _musicPlayer.PlayTrack();
     }
 
     public void PlayEmphasis1()
