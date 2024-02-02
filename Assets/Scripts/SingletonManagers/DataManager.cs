@@ -9,6 +9,7 @@ public class DataManager : MonoBehaviour
     private PlayerData _playerData = new PlayerData();
     public float TimePassed { get; private set; } = 0f;
     public bool IsTimeStarted { get; private set; } = false;
+    public bool ShouldPauseAtStart { get; private set; } = true;
     [SerializeField] private AbilityType _initialAbility1 = AbilityType.Dodge;
     [SerializeField] private AbilityType _initialAbility2 = AbilityType.Scratch;
 
@@ -101,5 +102,10 @@ public class DataManager : MonoBehaviour
     {
         _playerData.Abilities[0] = ability1;
         _playerData.Abilities[1] = ability2;
+    }
+
+    public void InitialPauseComplete()
+    {
+        ShouldPauseAtStart = false;
     }
 }
