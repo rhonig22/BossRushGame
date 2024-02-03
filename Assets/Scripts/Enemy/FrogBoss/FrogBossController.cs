@@ -9,7 +9,7 @@ public class FrogBossController : BaseBossController
     private Vector2 _playerLocation = Vector2.zero;
     private Vector2 _startJumpLocation, _currentLocation;
     private bool _isDead = false;
-    private readonly int _bubbleStormCount = 5;
+    private int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
     private readonly float _jumpSpeed = 12f;
     [SerializeField] private GameObject _bubble;
@@ -19,7 +19,9 @@ public class FrogBossController : BaseBossController
     [SerializeField] private AudioClip _littleSpitSound;
     [SerializeField] private AudioClip _bigSpitSound;
     [SerializeField] private AudioClip _landingSound;
-    public readonly Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
+    public float AttackWaitPeriod { get; private set; } = 1.5f;
+    public float AttackTriggerChance { get; private set; } = .4f;
+    public Dictionary<FrogAttackType, int> AttackChance = new Dictionary<FrogAttackType, int>()
     {
         { FrogAttackType.Proximity, 25 },
         { FrogAttackType.Bubble, 50 },
@@ -27,6 +29,19 @@ public class FrogBossController : BaseBossController
         { FrogAttackType.Bees, 15 },
         { FrogAttackType.Babies, 00 },
     };
+
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
+        var difficulty = DataManager.Instance.FrogBossDifficulty;
+        GetComponent<BossHealth>().SetMaxHealth(difficulty.Health);
+        _damage = difficulty.BaseDamage;
+        AttackChance = difficulty.AttackChance;
+        AttackTriggerChance = difficulty.TriggerAttackChance;
+        AttackWaitPeriod = difficulty.IdleLength;
+        _bubbleStormCount = difficulty.BubbleStormCount;
+    }
 
     protected override void Move()
     {

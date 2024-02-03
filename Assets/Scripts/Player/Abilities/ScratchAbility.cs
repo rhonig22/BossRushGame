@@ -7,6 +7,7 @@ public class ScratchAbility : BaseAbility
     private readonly int _scratchDamageMultiplier = 1;
     private bool _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
+    [SerializeField] private CapsuleCollider2D _scratchCollider;
     [SerializeField] private Animator _spriteAnimator;
     [SerializeField] private AudioClip _scratchMiss;
     [SerializeField] private AudioClip _scratchHit;
@@ -34,27 +35,28 @@ public class ScratchAbility : BaseAbility
         var direction = _playerController.CurrentDirection;
         if (Mathf.Abs(direction.x) > 0)
         {
+            _scratchCollider.size = new Vector2(1, 1);
             if (direction.x < 0)
             {
-                _scratchArea.transform.localPosition = new Vector3(-.75f, 0, 0);
-                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, -90);
+                _scratchArea.transform.localPosition = new Vector3(.1f, 0, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 90);
             }
             else
             {
-                _scratchArea.transform.localPosition = new Vector3(.75f, 0, 0);
-                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 90);
+                _scratchArea.transform.localPosition = new Vector3(-.1f, 0, 0);
+                _scratchArea.transform.rotation = Quaternion.Euler(0, 0, -90);
             }
         }
         else
         {
+            _scratchArea.transform.localPosition = new Vector3(0, 0, 0);
+            _scratchCollider.size = new Vector2(1, 1.4f);
             if (direction.y < 0)
             {
-                _scratchArea.transform.localPosition = new Vector3(0, -.75f, 0);
                 _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 180);
             }
             else
             {
-                _scratchArea.transform.localPosition = new Vector3(0, .75f, 0);
                 _scratchArea.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
@@ -63,10 +65,11 @@ public class ScratchAbility : BaseAbility
 
     public void DetectEnemyCollision()
     {
-        var capsule = _scratchArea.GetComponent<CapsuleCollider2D>();
-        Collider2D[] colliders = Physics2D.OverlapCapsuleAll((Vector2)_scratchArea.transform.position + capsule.offset, capsule.size, CapsuleDirection2D.Vertical, 0);
+        List<Collider2D> results = new List<Collider2D>();
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        Physics2D.OverlapCollider(_scratchCollider, contactFilter, results);
         bool hit = false;
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D collider in results)
         {
             if (collider.CompareTag("Enemy"))
             {

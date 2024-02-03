@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     private readonly int _maxBosses = 1;
     private int _currentRoomId = 1;
     private UnityEvent _sceneTransition = new UnityEvent();
-    public int Difficulty { get; private set; } = 1;
 
     private void Awake()
     {
@@ -40,7 +39,6 @@ public class GameManager : MonoBehaviour
         DataManager.Instance.PauseTimer();
         DataManager.Instance.ResetData();
         _currentRoomId = 1;
-        Difficulty = 1;
         LoadNextBoss();
     }
 
@@ -52,7 +50,7 @@ public class GameManager : MonoBehaviour
         if (_currentRoomId > _maxBosses)
         {
             _currentRoomId -= _maxBosses;
-            Difficulty += 1;
+            DataManager.Instance.IncreaseDifficulty();
         }
 
         LoadRewards();

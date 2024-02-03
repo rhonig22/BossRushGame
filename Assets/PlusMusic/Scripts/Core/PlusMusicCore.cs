@@ -29,7 +29,6 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using PlusMusicTypes;
-using static PlasticPipe.Server.MonitorStats;
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -261,7 +260,7 @@ namespace PlusMusic
 
             // Default settings
             settings = new PMSettings();
-            settings.target      = GetEnvVariable("PM_TARGET", "app");
+            settings.target      = GetEnvVariable("PM_TARGET", "amp");
             settings.username    = GetEnvVariable("PM_USER", "");
             settings.password    = GetEnvVariable("PM_PASS", "");
             settings.credentials = "";

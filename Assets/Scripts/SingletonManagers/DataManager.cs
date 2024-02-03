@@ -7,11 +7,56 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
     private PlayerData _playerData = new PlayerData();
+    private FrogBossDifficulty[] _frogDifficultyList = new FrogBossDifficulty[] {
+        new FrogBossDifficulty(300, 1, .25f, 1.5f, 0, new Dictionary<FrogAttackType, int>()
+            {
+                { FrogAttackType.Proximity, 40 },
+                { FrogAttackType.Bubble, 60 },
+                { FrogAttackType.BubbleStorm, 00 },
+                { FrogAttackType.Bees, 00 },
+                { FrogAttackType.Babies, 00 },
+            }),
+        new FrogBossDifficulty(350, 2, .4f, 1.25f, 3, new Dictionary<FrogAttackType, int>()
+            {
+                { FrogAttackType.Proximity, 40 },
+                { FrogAttackType.Bubble, 50 },
+                { FrogAttackType.BubbleStorm, 10 },
+                { FrogAttackType.Bees, 00 },
+                { FrogAttackType.Babies, 00 },
+            }),
+        new FrogBossDifficulty(400, 4, .5f, 1f, 3, new Dictionary<FrogAttackType, int>()
+            {
+                { FrogAttackType.Proximity, 40 },
+                { FrogAttackType.Bubble, 35 },
+                { FrogAttackType.BubbleStorm, 15 },
+                { FrogAttackType.Bees, 10 },
+                { FrogAttackType.Babies, 00 },
+            }),
+        new FrogBossDifficulty(450, 5, .75f, .75f, 5, new Dictionary<FrogAttackType, int>()
+            {
+                { FrogAttackType.Proximity, 25 },
+                { FrogAttackType.Bubble, 40 },
+                { FrogAttackType.BubbleStorm, 20 },
+                { FrogAttackType.Bees, 15 },
+                { FrogAttackType.Babies, 00 },
+            }),
+    };
+    public FrogBossDifficulty FrogBossDifficulty { get; private set; }
+    public int CurrentDifficulty
+    {
+        get { return _currentDifficulty; }
+        private set
+        {
+            _currentDifficulty = (int)Mathf.Clamp(value, 0, _frogDifficultyList.Length - 1);
+            FrogBossDifficulty = _frogDifficultyList[_currentDifficulty];
+        }
+    }
     public float TimePassed { get; private set; } = 0f;
     public bool IsTimeStarted { get; private set; } = false;
     public bool ShouldPauseAtStart { get; private set; } = true;
     [SerializeField] private AbilityType _initialAbility1 = AbilityType.Dodge;
     [SerializeField] private AbilityType _initialAbility2 = AbilityType.Scratch;
+    private int _currentDifficulty = 0;
 
 
     private void Awake()
@@ -46,7 +91,13 @@ public class DataManager : MonoBehaviour
     public void ResetData()
     {
         _playerData = new PlayerData(_initialAbility1, _initialAbility2);
+        CurrentDifficulty = 0;
         TimePassed = 0f;
+    }
+
+    public void IncreaseDifficulty()
+    {
+        CurrentDifficulty = CurrentDifficulty + 1;
     }
 
     public void SetTime(float time)
