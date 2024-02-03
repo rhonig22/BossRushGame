@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FrogBossIdleBehavior : StateMachineBehaviour
 {
-    private readonly float _attackWaitPeriod = 1.5f;
-    private readonly float _chanceOfAttack = .4f;
     private float _attackTimer = 0f;
     private FrogBossController _controller;
 
@@ -20,9 +18,9 @@ public class FrogBossIdleBehavior : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _attackTimer += Time.deltaTime;
-        if (_attackTimer > _attackWaitPeriod)
+        if (_attackTimer > _controller.AttackWaitPeriod)
         {
-            if (Random.Range(0f, 1f) >= _chanceOfAttack)
+            if (Random.Range(0f, 1f) >= _controller.AttackTriggerChance)
             {
                 DetermineAttack();
             }

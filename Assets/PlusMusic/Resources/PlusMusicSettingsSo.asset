@@ -40,10 +40,10 @@ MonoBehaviour:
 '
   _plusMusicSettings:
     persistAcrossScenes: 1
-    debugMode: 0
+    debugMode: 1
     offlineMode: 0
-    logRequestUrls: 0
-    logServerResponses: 0
+    logRequestUrls: 1
+    logServerResponses: 1
     doPingbacks: 1
     useLocalCache: 1
     refreshLocalCache: 0

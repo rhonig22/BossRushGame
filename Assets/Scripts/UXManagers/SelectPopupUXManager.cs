@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class SelectPopupUXManager : MonoBehaviour
 {
     [SerializeField] private GameObject _selectPopup;
+    [SerializeField] private TextMeshProUGUI _newAbilityName;
     [SerializeField] private TextMeshProUGUI _ability1Name;
     [SerializeField] private TextMeshProUGUI _ability2Name;
     [SerializeField] private Button _selectButton;
@@ -19,6 +20,7 @@ public class SelectPopupUXManager : MonoBehaviour
     {
         _newAbility = newAbility;
         _abilities = DataManager.Instance.GetAbilities();
+        _newAbilityName.text = newAbility.ToString();
         _ability1Name.text = _abilities[0].ToString();
         _ability2Name.text = _abilities[1].ToString();
         _selectPopup.SetActive(true);
