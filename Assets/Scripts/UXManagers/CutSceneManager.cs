@@ -15,6 +15,7 @@ public class CutSceneManager : MonoBehaviour
     public void Play()
     {
         TimeManager.Instance.Pause(true);
+        MusicManager.Instance.StopMusicClip();
         _cutSceneAnimator.SetTrigger("StartRoom");
     }
 

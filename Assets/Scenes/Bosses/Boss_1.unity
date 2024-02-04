@@ -753,6 +753,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 155720785867785656, guid: 5a4a6171844c1524b89f0df9cf2f10dd, type: 3}
+      propertyPath: _clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e26332f9f4207524680d57464899b48f, type: 3}
+    - target: {fileID: 155720785867785656, guid: 5a4a6171844c1524b89f0df9cf2f10dd, type: 3}
       propertyPath: playOnStart
       value: 0
       objectReference: {fileID: 0}
@@ -1072,7 +1076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1264349493265013748, guid: a721c680b4e95214e962f42de03012b4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1264349493265013748, guid: a721c680b4e95214e962f42de03012b4, type: 3}
       propertyPath: m_LocalRotation.w

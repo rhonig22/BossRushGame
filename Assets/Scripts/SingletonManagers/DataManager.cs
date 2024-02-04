@@ -42,6 +42,10 @@ public class DataManager : MonoBehaviour
             }),
     };
     public FrogBossDifficulty FrogBossDifficulty { get; private set; }
+    public Ability[,] Rewards { get; private set; } = new Ability[,]
+    {
+        {new Ability("Bubble Wand", AbilityType.Bubble), new Ability("Jump Boots", AbilityType.Jump) }
+    };
     public int CurrentDifficulty
     {
         get { return _currentDifficulty; }

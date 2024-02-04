@@ -11,6 +11,8 @@ public class MusicManager : MonoBehaviour
     private bool _hasProjectLoaded = false;
     private bool _isTrackLoaded = false;
     private List<PMTransitionInfo> _nextArrangements = new List<PMTransitionInfo>();
+    public bool UsePlusMusic { get; private set; } = false;
+    [SerializeField] private AudioSource _musicSource;
 
     private void Awake()
     {
@@ -25,21 +27,31 @@ public class MusicManager : MonoBehaviour
 
     private void Start()
     {
-        TryLoadTracks();
+        if (UsePlusMusic)
+        {
+            TryLoadTracks();
+        }
+        else
+        {
+            _musicSource.Play();
+        }
     }
 
     private void Update()
     {
-        if (!_hasProjectLoaded)
+        if (UsePlusMusic)
         {
-            TryLoadTracks();
-        }
+            if (!_hasProjectLoaded)
+            {
+                TryLoadTracks();
+            }
 
-        if (_isTrackLoaded && _nextArrangements.Count > 0)
-        {
-            var arrangement = _nextArrangements[0];
-            _nextArrangements.Remove(arrangement);
-            LoadArrangement(arrangement);
+            if (_isTrackLoaded && _nextArrangements.Count > 0)
+            {
+                var arrangement = _nextArrangements[0];
+                _nextArrangements.Remove(arrangement);
+                LoadArrangement(arrangement);
+            }
         }
     }
 
@@ -84,5 +96,23 @@ public class MusicManager : MonoBehaviour
     public void AddTransition(PMTransitionInfo transitionInfo)
     {
         _nextArrangements.Add(transitionInfo);
+    }
+
+    public void PlayMusicClip(AudioClip clip, bool playOnce = false)
+    {
+        if (playOnce)
+        {
+            _musicSource.Stop();
+            _musicSource.PlayOneShot(clip);
+        }
+        else
+        {
+            _musicSource.clip = clip;
+            _musicSource.Play();
+        }
+    }
+
+    public void StopMusicClip() {
+        _musicSource.Stop();
     }
 }

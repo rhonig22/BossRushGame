@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BaseBossController : MonoBehaviour
 {
-    protected readonly float _pushbacktime = .25f, _pauseTime = .5f;
+    protected readonly float _pushbacktime = .1f, _pauseTime = .5f;
     protected Transform _player;
     protected Rigidbody2D _rb;
     protected Collider2D _collider;
@@ -16,6 +16,9 @@ public class BaseBossController : MonoBehaviour
     [SerializeField] protected Animator _bossAttackAnimator;
     [SerializeField] private AudioClip _damagedSound;
     public float CurrentSpeed { get; protected set; } = 0;
+    public float Anger { get; protected set; } = 0;
+    public bool IsInvincible { get; protected set; } = false;
+    public readonly int AngerThreshold = 3;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -56,6 +59,7 @@ public class BaseBossController : MonoBehaviour
         if (!_enablePause)
             return;
 
+        Anger++;
         _pauseMovement = true;
         _spriteAnimator.SetBool("IsPaused", true);
         SoundManager.Instance.PlaySound(_damagedSound, transform.position);

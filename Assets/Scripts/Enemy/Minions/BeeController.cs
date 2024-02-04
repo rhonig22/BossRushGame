@@ -16,6 +16,7 @@ public class BeeController : FollowBossController
         base.Start();
         GetComponent<BossHealth>().SetMaxHealth(_beeHealth);
         CurrentSpeed = 2f;
+        _damage = 10;
     }
 
     protected override void Move()
