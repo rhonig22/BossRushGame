@@ -2531,6 +2531,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 155720785867785656, guid: 5a4a6171844c1524b89f0df9cf2f10dd, type: 3}
+      propertyPath: _clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fac1815fd470144cbb37f5a495fc7b3, type: 3}
+    - target: {fileID: 155720785867785656, guid: 5a4a6171844c1524b89f0df9cf2f10dd, type: 3}
       propertyPath: arrangementTransition.tag
       value: 5
       objectReference: {fileID: 0}
@@ -5802,6 +5806,8 @@ MonoBehaviour:
   _soldHeckaCheese: {fileID: 664573121}
   _ability1Name: {fileID: 179970977}
   _ability2Name: {fileID: 537316767}
+  _reward1Name: {fileID: 365133830}
+  _reward2Name: {fileID: 432224763}
   _selectPopup: {fileID: 1386083786}
   _proceedButton: {fileID: 408200576}
   _cheeseEatingSound: {fileID: 8300000, guid: 483819dcfc4b3cf4480effad57ef3301, type: 3}

@@ -26,6 +26,17 @@ public class BaseAbility : MonoBehaviour
     }
 }
 
+public class Ability
+{
+    public string Name = string.Empty;
+    public AbilityType Type;
+    public Ability(string name, AbilityType type)
+    {
+        Name = name;
+        Type = type;
+    }
+}
+
 public enum AbilityType
 {
     Scratch = 0,

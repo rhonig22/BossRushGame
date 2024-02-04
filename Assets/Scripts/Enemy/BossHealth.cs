@@ -27,6 +27,9 @@ public class BossHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (_bossController.IsInvincible)
+            return;
+
         Health -= damage;
         if (_healthBar != null)
             _healthBar.SetNewVal(Health);

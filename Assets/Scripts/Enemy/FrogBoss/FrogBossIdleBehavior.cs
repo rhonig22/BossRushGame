@@ -17,6 +17,12 @@ public class FrogBossIdleBehavior : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (_controller.Anger >= _controller.AngerThreshold)
+        {
+            _controller.AngerAttack();
+            return;
+        }
+
         _attackTimer += Time.deltaTime;
         if (_attackTimer > _controller.AttackWaitPeriod)
         {

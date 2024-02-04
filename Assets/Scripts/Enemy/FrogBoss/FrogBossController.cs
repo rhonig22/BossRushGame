@@ -84,6 +84,9 @@ public class FrogBossController : BaseBossController
 
     public override int DoDamage()
     {
+        if (_isDead)
+            return 0;
+
         switch (_currentAttack)
         {
             case FrogAttackType.Proximity:
@@ -93,8 +96,20 @@ public class FrogBossController : BaseBossController
         }
     }
 
+    public override float GetPushbackTime()
+    {
+        switch (_currentAttack)
+        {
+            case FrogAttackType.Proximity:
+                return _pushbacktime * 3;
+            default:
+                return _pushbacktime;
+        }
+    }
+
     public void DetermineNextAttack()
     {
+        Anger = 0;
         int roll = Random.Range(0, 100);
         int totalChance = 0;
         foreach (var attack in AttackChance.Keys)
@@ -108,10 +123,17 @@ public class FrogBossController : BaseBossController
         }
     }
 
+    public void AngerAttack()
+    {
+        Anger = 0;
+        _bossAttackAnimator.SetTrigger(FrogAttackType.Proximity.ToString());
+    }
+
     public void ReturnToIdle()
     {
         _currentAttack = FrogAttackType.Idle;
         _enablePause = true;
+        IsInvincible = false;
         CurrentSpeed = 0;
         _bossAttackAnimator.SetTrigger("Idle");
     }
@@ -158,11 +180,18 @@ public class FrogBossController : BaseBossController
         _playerLocation = GameObject.FindWithTag("Player").transform.position;
     }
 
+    public void JumpWindup()
+    {
+        PlayRoarSound();
+        _enablePause = false;
+    }
+
     private void JumpAttack()
     {
         SetPlayerLocation();
         _startJumpLocation = _rb.position;
         CurrentSpeed = _jumpSpeed;
+        IsInvincible = true;
     }
 
     private void BubbleAttack()
@@ -226,6 +255,14 @@ public class FrogBossController : BaseBossController
         Vector3 spawnPosition = transform.position;
         var bee = Instantiate(_bee);
         bee.transform.position = spawnPosition;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider != null && _currentAttack == FrogAttackType.Proximity && collision.collider.CompareTag("Wall"))
+        {
+            _bossAttackAnimator.SetFloat("JumpProgress", 1f);
+        }
     }
 }
 
