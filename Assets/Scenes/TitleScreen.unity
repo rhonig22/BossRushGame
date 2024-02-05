@@ -768,9 +768,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1414990699267449181, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.b
+      value: 0.654902
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414990699267449181, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414990699267449181, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.r
+      value: 0.50980395
+      objectReference: {fileID: 0}
     - target: {fileID: 2261075855584119434, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
       propertyPath: m_Name
       value: LeaderboardButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339375597740989494, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339375597740989494, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339375597740989494, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Color.r
+      value: 0.28627452
       objectReference: {fileID: 0}
     - target: {fileID: 3821185922042209636, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
       propertyPath: m_text
@@ -803,6 +827,10 @@ PrefabInstance:
     - target: {fileID: 8163064326470540024, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8163064326470540024, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8163064326470540024, guid: 2eefd9f70c4874f4eb66d7406447dc08, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
