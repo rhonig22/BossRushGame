@@ -58,7 +58,7 @@ public class BubbleController : FollowBossController
         {
             if (_objectToSeek == "Enemy")
             {
-                collision.collider.GetComponent<BossHealth>().TakeDamage(DoDamage());
+                collision.collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(1));
             }
 
             EnemyDeath();
@@ -73,6 +73,9 @@ public class BubbleController : FollowBossController
         _isDying = true;
         _pauseMovement = true;
         _collider.enabled = false;
+        if (!_startMovement)
+            BubbleSent.Invoke();
+
         SoundManager.Instance.PlaySound(_bubblePop, transform.position);
         _spriteAnimator.SetTrigger("death");
     }
