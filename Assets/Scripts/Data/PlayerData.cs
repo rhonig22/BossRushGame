@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public string Name;
+    public int CurrentHighScore;
     public float TimePassed;
     public int BossesDefeated;
     public int DamageDealt;
@@ -16,7 +16,6 @@ public class PlayerData
 
     public PlayerData(AbilityType ability1 = AbilityType.Dodge, AbilityType ability2 = AbilityType.Scratch)
     {
-        Name = string.Empty;
         TimePassed = 0;
         BossesDefeated = 0;
         DamageDealt = 0;
