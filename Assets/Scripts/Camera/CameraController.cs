@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     private CinemachineBasicMultiChannelPerlin _noisePerlin;
     private readonly float _shakeAmplitude = 2f;
     private readonly float _shakeFrequency = 2f;
-    private readonly float _shakeTime = .25f;
+    private readonly float _shakeTime = .2f;
     private float _shakeTimeElapsed = 0;
     private bool _isShaking = false;
 

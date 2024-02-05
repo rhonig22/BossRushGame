@@ -74,6 +74,8 @@ public class ScratchAbility : BaseAbility
             if (collider.CompareTag("Enemy"))
             {
                 collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(_scratchDamageMultiplier));
+                var collisionPoint = collider.ClosestPoint(_scratchCollider.transform.position);
+                collider.GetComponent<BaseBossController>().SprayParticles(collisionPoint);
                 hit = true;
             }
         }

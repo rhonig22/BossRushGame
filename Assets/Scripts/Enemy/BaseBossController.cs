@@ -15,6 +15,7 @@ public class BaseBossController : MonoBehaviour
     [SerializeField] protected Animator _spriteAnimator;
     [SerializeField] protected Animator _bossAttackAnimator;
     [SerializeField] private AudioClip _damagedSound;
+    [SerializeField] private ParticleSystem _damageParticles;
     public float CurrentSpeed { get; protected set; } = 0;
     public float Anger { get; protected set; } = 0;
     public bool IsInvincible { get; protected set; } = false;
@@ -64,6 +65,14 @@ public class BaseBossController : MonoBehaviour
         _spriteAnimator.SetBool("IsPaused", true);
         SoundManager.Instance.PlaySound(_damagedSound, transform.position);
         StartCoroutine(EndPause());
+    }
+
+    public virtual void SprayParticles(Vector2 hitLocation)
+    {
+        if (_damageParticles == null) return;
+
+        _damageParticles.transform.position = hitLocation;
+        _damageParticles.Play();
     }
 
     protected IEnumerator EndPause()

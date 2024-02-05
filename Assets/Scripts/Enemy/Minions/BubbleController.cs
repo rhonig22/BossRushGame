@@ -59,6 +59,8 @@ public class BubbleController : FollowBossController
             if (_objectToSeek == "Enemy")
             {
                 collision.collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(1));
+                var contact = collision.GetContact(0);
+                collision.collider.GetComponent<BaseBossController>().SprayParticles(contact.point);
             }
 
             EnemyDeath();

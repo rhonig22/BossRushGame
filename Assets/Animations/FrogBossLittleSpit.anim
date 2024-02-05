@@ -22,9 +22,9 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -283343548, guid: 4093acdecab414013902e33f9c5598b5, type: 3}
-    - time: 0.5
+    - time: 0.16666667
       value: {fileID: 1580178402, guid: 4093acdecab414013902e33f9c5598b5, type: 3}
-    - time: 0.8333333
+    - time: 0.6666667
       value: {fileID: -32359063, guid: 4093acdecab414013902e33f9c5598b5, type: 3}
     attribute: m_Sprite
     path: 
@@ -83,7 +83,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 2
     messageOptions: 0
-  - time: 0.8333333
+  - time: 1
     functionName: ReturnToIdle
     data: 
     objectReferenceParameter: {fileID: 0}
