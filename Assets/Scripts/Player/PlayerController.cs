@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    public Vector3 CurrentDirection { get; private set; } = Vector2.zero;
+    public Vector3 CurrentDirection { get; private set; } = Vector2.up;
     public bool IsInvincible { get; private set; } = false;
     private float _horizontalInput, _verticalInput;
     private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _isDead, _inPushback = false;
@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AbilityType _ability1Type = AbilityType.Dodge;
     [SerializeField] private AbilityType _ability2Type = AbilityType.Scratch;
     [SerializeField] private Rigidbody2D _playerRB;
-    [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private Animator _spriteAnimator;
     [SerializeField] private AudioClip _playerDeathClip;
 

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private readonly string _roomName = "Boss_{0}";
     private readonly string _endSceneName = "EndScreen";
     private readonly string _transitionSceneName = "TransitionScreen";
+    private readonly string _leaderboardSceneName = "Leaderboard";
     private readonly int _maxBosses = 1;
     private int _currentRoomId = 1;
     private UnityEvent _sceneTransition = new UnityEvent();
@@ -66,6 +67,12 @@ public class GameManager : MonoBehaviour
     {
         UnityAction loadEndScene = () => { SceneManager.LoadScene(_endSceneName); };
         StartCoroutine(WaitAndTransition(loadEndScene, _transitionTime));
+    }
+
+    public void LoadLeaderboard()
+    {
+        UnityAction loadEndScene = () => { SceneManager.LoadScene(_leaderboardSceneName); };
+        StartCoroutine(WaitAndTransition(loadEndScene, 0f));
     }
 
     private void LoadRewards()

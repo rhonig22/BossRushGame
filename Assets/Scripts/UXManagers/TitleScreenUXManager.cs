@@ -8,4 +8,9 @@ public class TitleScreenUXManager : MonoBehaviour
     {
         GameManager.Instance.StartRun();
     }
+
+    public void ViewLeaderboard()
+    {
+        GameManager.Instance.LoadLeaderboard();
+    }
 }

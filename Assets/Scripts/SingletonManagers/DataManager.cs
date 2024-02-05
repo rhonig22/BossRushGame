@@ -53,14 +53,26 @@ public class DataManager : MonoBehaviour
         {
             _currentDifficulty = (int)Mathf.Clamp(value, 0, _frogDifficultyList.Length - 1);
             FrogBossDifficulty = _frogDifficultyList[_currentDifficulty];
+            if (value > _currentDifficulty)
+                FrogBossDifficulty.Health += _healthIncrement;
         }
     }
     public float TimePassed { get; private set; } = 0f;
     public bool IsTimeStarted { get; private set; } = false;
     public bool ShouldPauseAtStart { get; private set; } = true;
+    public string[] FrogBossNames { get; private set; } = new string[]
+    {
+        "FRAWG",
+        "FRAWG... again",
+        "Harder FRAWG",
+        "ULTRA FRAWG"
+    };
     [SerializeField] private AbilityType _initialAbility1 = AbilityType.Dodge;
     [SerializeField] private AbilityType _initialAbility2 = AbilityType.Scratch;
+    private readonly int _healthIncrement = 50;
     private int _currentDifficulty = 0;
+    private string _userName;
+    private string _userId;
 
 
     private void Awake()
@@ -109,6 +121,11 @@ public class DataManager : MonoBehaviour
         _playerData.TimePassed = time;
     }
 
+    public float GetTimeValue()
+    {
+        return _playerData.TimePassed;
+    }
+
     public string GetTime()
     {
         return TimeSpan.FromSeconds((double)_playerData.TimePassed).ToString(@"mm\:ss");
@@ -125,10 +142,17 @@ public class DataManager : MonoBehaviour
 
     public void SetName(string name)
     {
-        _playerData.Name = name;
+        _userName = name;
     }
 
-    public string GetName() { return _playerData.Name; }
+    public string GetName() { return _userName; }
+
+    public void SetId(string id)
+    {
+        _userId = id;
+    }
+
+    public string GetId() { return _userId; }
 
     public void AddDamageDealt(int damage)
     {
