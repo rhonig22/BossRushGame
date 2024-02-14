@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BaseBossController : MonoBehaviour
 {
-    protected readonly float _pushbacktime = .1f, _pauseTime = .5f;
+    protected readonly float _pushbackForce = 40f, _pauseTime = .5f;
     protected Transform _player;
     protected Rigidbody2D _rb;
     protected Collider2D _collider;
@@ -50,9 +50,9 @@ public class BaseBossController : MonoBehaviour
         return _damage;
     }
 
-    public virtual float GetPushbackTime()
+    public virtual float GetPushbackForce()
     {
-        return _pushbacktime;
+        return _pushbackForce;
     }
 
     public virtual void Takehit()

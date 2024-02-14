@@ -7,7 +7,7 @@ public class FrogBossController : BaseBossController
 {
     private FrogAttackType _currentAttack = FrogAttackType.Idle;
     private Vector2 _playerLocation = Vector2.zero;
-    private Vector2 _startJumpLocation, _currentLocation;
+    private Vector2 _startJumpLocation;
     private bool _isDead = false;
     private int _bubbleStormCount = 5;
     private readonly float _bubbleDelay = .4f;
@@ -99,14 +99,14 @@ public class FrogBossController : BaseBossController
         }
     }
 
-    public override float GetPushbackTime()
+    public override float GetPushbackForce()
     {
         switch (_currentAttack)
         {
             case FrogAttackType.Proximity:
-                return _pushbacktime * 3;
+                return _pushbackForce * 2;
             default:
-                return _pushbacktime;
+                return _pushbackForce;
         }
     }
 

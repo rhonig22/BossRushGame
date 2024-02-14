@@ -8,6 +8,7 @@ public class JumpAbility : BaseAbility
     private readonly float _jumpTime = .25f;
     private readonly float _initialShadowSpeed = 6f;
     private readonly string[] _enemyMask = new string[] { "Enemy" };
+    private readonly string[] _wallMask = new string[] { "Wall" };
     private readonly string[] _nothingMask = new string[] { "Nothing" };
     private Collider2D _collider;
     private bool _isJumping = false, _isShadowMoving = false;
@@ -28,7 +29,12 @@ public class JumpAbility : BaseAbility
         if (_isShadowMoving)
         {
             var direction = _playerController.CurrentDirection;
-            _shadow.transform.localPosition += direction * _shadowSpeed * Time.fixedDeltaTime;
+            var distance = _shadowSpeed * Time.fixedDeltaTime;
+            RaycastHit2D hit = Physics2D.CircleCast(_shadow.transform.position, distance, direction, distance, LayerMask.GetMask(_wallMask));
+            if (hit.collider != null)
+                return;
+
+            _shadow.transform.localPosition += direction * distance;
             _shadowSpeed += _shadowSpeed * Time.fixedDeltaTime;
         }
         else if (_isJumping)

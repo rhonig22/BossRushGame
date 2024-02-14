@@ -24,7 +24,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             BaseBossController boss = collision.gameObject.GetComponent<BaseBossController>();
             _playerHealth.TakeDamage(boss.DoDamage());
-            _playerController.TakePushback(boss.GetPushbackTime(), collision.GetContact(0).normal);
+            _playerController.TakePushback(boss.GetPushbackForce(), collision.GetContact(0).normal);
             SoundManager.Instance.PlaySound(_hitSound, transform.position);
         }
     }

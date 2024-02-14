@@ -20,8 +20,8 @@ public class DataManager : MonoBehaviour
             {
                 { FrogAttackType.Proximity, 40 },
                 { FrogAttackType.Bubble, 50 },
-                { FrogAttackType.BubbleStorm, 10 },
-                { FrogAttackType.Bees, 00 },
+                { FrogAttackType.BubbleStorm, 5 },
+                { FrogAttackType.Bees, 20 },
                 { FrogAttackType.Babies, 00 },
             }),
         new FrogBossDifficulty(400, 4, .5f, 1f, 3, new Dictionary<FrogAttackType, int>()
