@@ -7,10 +7,15 @@ using UnityEngine.UI;
 public class TransitionScreenUXManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth _playerHealth;
+    [SerializeField] private GameObject _ability1Button;
+    [SerializeField] private GameObject _ability2Button;
+    [SerializeField] private GameObject _heckaCheeseButton;
+    [SerializeField] private GameObject _someCheeseButton;
     [SerializeField] private GameObject _soldSomeCheese;
     [SerializeField] private GameObject _soldAbility1;
     [SerializeField] private GameObject _soldAbility2;
     [SerializeField] private GameObject _soldHeckaCheese;
+    [SerializeField] private GameObject _freeTag;
     [SerializeField] private TextMeshProUGUI _ability1Name;
     [SerializeField] private TextMeshProUGUI _ability2Name;
     [SerializeField] private TextMeshProUGUI _reward1Name;
@@ -27,11 +32,19 @@ public class TransitionScreenUXManager : MonoBehaviour
     {
         SetCurrentAbilities();
         SetCurrentRewards();
+        _ability1Button.GetComponent<Button>().Select();
         _selectPopup.Finished.AddListener(() =>
         {
             SetCurrentAbilities();
-            _proceedButton.Select();
+            
+            if (_someCheeseSelected)
+            {
+                _proceedButton.Select();
+            }else{
+                _someCheeseButton.GetComponent<Button>().Select();
+            }
         });
+
     }
 
     public void StartBoss()
@@ -47,6 +60,13 @@ public class TransitionScreenUXManager : MonoBehaviour
         SomeCheeseSold();
         _playerHealth.AddHealth(.25f);
         SoundManager.Instance.PlaySound(_cheeseEatingSound, transform.position);
+        
+        if (_rewardSelected)
+        {
+            _proceedButton.Select();
+        }else{
+            _heckaCheeseButton.GetComponent<Button>().Select();
+        }
     }
 
     public void HeckaCheeseSelected()
@@ -55,8 +75,16 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
+        _soldHeckaCheese.SetActive(true);
         _playerHealth.AddHealth(1f);
         SoundManager.Instance.PlaySound(_cheeseEatingSound, transform.position);
+
+        if (_someCheeseSelected)
+        {
+            _proceedButton.Select();
+        }else{
+            _someCheeseButton.GetComponent<Button>().Select();
+        }
     }
 
     public void Ability1Selected()
@@ -65,6 +93,7 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
+        _soldAbility1.SetActive(true);
         _selectPopup.Open(DataManager.Instance.Rewards[0,0].Type, 0);
     }
 
@@ -74,6 +103,7 @@ public class TransitionScreenUXManager : MonoBehaviour
             return;
 
         RewardSold();
+        _soldAbility2.SetActive(true);
         _selectPopup.Open(DataManager.Instance.Rewards[0, 1].Type, 1);
     }
 
@@ -81,14 +111,16 @@ public class TransitionScreenUXManager : MonoBehaviour
     {
         _someCheeseSelected = true;
         _soldSomeCheese.SetActive(true);
+        _someCheeseButton.GetComponent<Button>().interactable = false;
+        _freeTag.GetComponent<Image>().enabled = false;
     }
 
     private void RewardSold()
     {
         _rewardSelected = true;
-        _soldAbility1.SetActive(true);
-        _soldAbility2.SetActive(true);
-        _soldHeckaCheese.SetActive(true);
+        _ability1Button.GetComponent<Button>().interactable = false;
+        _ability2Button.GetComponent<Button>().interactable = false;
+        _heckaCheeseButton.GetComponent<Button>().interactable = false;
     }
 
     private void SetCurrentAbilities()
