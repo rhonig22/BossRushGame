@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class TransitionScreenUXManager : MonoBehaviour
 {
     [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private GameObject _ability1Button;
-    [SerializeField] private GameObject _ability2Button;
-    [SerializeField] private GameObject _heckaCheeseButton;
-    [SerializeField] private GameObject _someCheeseButton;
+    [SerializeField] private Button _ability1Button;
+    [SerializeField] private Button _ability2Button;
+    [SerializeField] private Button _heckaCheeseButton;
+    [SerializeField] private Button _someCheeseButton;
     [SerializeField] private GameObject _soldSomeCheese;
     [SerializeField] private GameObject _soldAbility1;
     [SerializeField] private GameObject _soldAbility2;
@@ -32,7 +32,7 @@ public class TransitionScreenUXManager : MonoBehaviour
     {
         SetCurrentAbilities();
         SetCurrentRewards();
-        _ability1Button.GetComponent<Button>().Select();
+        _ability1Button.Select();
         _selectPopup.Finished.AddListener(() =>
         {
             SetCurrentAbilities();
@@ -41,7 +41,7 @@ public class TransitionScreenUXManager : MonoBehaviour
             {
                 _proceedButton.Select();
             }else{
-                _someCheeseButton.GetComponent<Button>().Select();
+                _someCheeseButton.Select();
             }
         });
 
@@ -65,7 +65,7 @@ public class TransitionScreenUXManager : MonoBehaviour
         {
             _proceedButton.Select();
         }else{
-            _heckaCheeseButton.GetComponent<Button>().Select();
+            _heckaCheeseButton.Select();
         }
     }
 
@@ -83,7 +83,7 @@ public class TransitionScreenUXManager : MonoBehaviour
         {
             _proceedButton.Select();
         }else{
-            _someCheeseButton.GetComponent<Button>().Select();
+            _someCheeseButton.Select();
         }
     }
 
@@ -111,16 +111,44 @@ public class TransitionScreenUXManager : MonoBehaviour
     {
         _someCheeseSelected = true;
         _soldSomeCheese.SetActive(true);
-        _someCheeseButton.GetComponent<Button>().interactable = false;
+        _someCheeseButton.interactable = false;
         _freeTag.GetComponent<Image>().enabled = false;
+        if (!_rewardSelected)
+        {
+            var navigation = _heckaCheeseButton.navigation;
+            navigation.selectOnDown = _proceedButton;
+            _heckaCheeseButton.navigation = navigation;
+
+            navigation = _proceedButton.navigation;
+            navigation.selectOnUp = _heckaCheeseButton;
+            _proceedButton.navigation = navigation;
+        }
+        else
+        {
+            var navigation = _proceedButton.navigation;
+            navigation.selectOnUp = null;
+            _proceedButton.navigation = navigation;
+        }
     }
 
     private void RewardSold()
     {
         _rewardSelected = true;
-        _ability1Button.GetComponent<Button>().interactable = false;
-        _ability2Button.GetComponent<Button>().interactable = false;
-        _heckaCheeseButton.GetComponent<Button>().interactable = false;
+        _ability1Button.interactable = false;
+        _ability2Button.interactable = false;
+        _heckaCheeseButton.interactable = false;
+        if (!_someCheeseSelected)
+        {
+            var navigation = _someCheeseButton.navigation;
+            navigation.selectOnUp = null;
+            _someCheeseButton.navigation = navigation;
+        }
+        else
+        {
+            var navigation = _proceedButton.navigation;
+            navigation.selectOnUp = null;
+            _proceedButton.navigation = navigation;
+        }
     }
 
     private void SetCurrentAbilities()
