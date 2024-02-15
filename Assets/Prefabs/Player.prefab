@@ -210,7 +210,6 @@ MonoBehaviour:
   _ability1Type: 1
   _ability2Type: 0
   _playerRB: {fileID: 4612184342884935131}
-  _playerSpriteRenderer: {fileID: 5892680474350261106}
   _spriteAnimator: {fileID: 8579852582378233415}
   _playerDeathClip: {fileID: 8300000, guid: eb8ef55af9b324b4bbfa0c4c5ee6d711, type: 3}
 --- !u!114 &2816733723852462342

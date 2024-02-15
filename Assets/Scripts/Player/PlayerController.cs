@@ -8,12 +8,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 CurrentDirection { get; private set; } = Vector2.up;
     public bool IsInvincible { get; private set; } = false;
     private float _horizontalInput, _verticalInput;
-    private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _isDead, _inPushback = false;
-    private int _currentSpeed = 8;
-    private readonly int _speed = 8, _dodgeMultiplier = 2, _pushbackMultiplier = 2;
-    private readonly float _movementSmoothing = 0f;
-    private Vector2 _currentVelocity = Vector2.zero;
-    private Vector3 _tempDirection;
+    private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _isDead = false;
+    private readonly float _topSpeed = 12f, _timeToTopSpeed = .2f, _degradeInertiaMultiplier = 6f, _dashMultiplier = 1.5f;
     private PlayerHealth _playerHealth;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
@@ -53,14 +49,13 @@ public class PlayerController : MonoBehaviour
     {
         _isDodging = true;
         IsInvincible = true;
-        _currentSpeed *= _dodgeMultiplier;
+        _playerRB.AddForce(CurrentDirection * _topSpeed * _dashMultiplier, ForceMode2D.Impulse);
     }
 
     public void EndDodge()
     {
         _isDodging = false;
         IsInvincible = false;
-        _currentSpeed = _speed;
     }
 
     public void HaltMovement()
@@ -75,23 +70,11 @@ public class PlayerController : MonoBehaviour
         _noMovement = false;
     }
 
-    public void TakePushback(float time, Vector3 direction)
+    public void TakePushback(float force, Vector3 direction)
     {
-        _inPushback = true;
-        _tempDirection = CurrentDirection;
-        CurrentDirection = direction;
-        _currentSpeed *= _pushbackMultiplier;
+        _playerRB.AddForce(direction * force, ForceMode2D.Impulse);
         triggerScreenShake.Invoke();
         TimeManager.Instance.DoSlowmotion(.05f, 2f);
-        StartCoroutine(EndPushback(time));
-    }
-
-    private IEnumerator EndPushback(float time)
-    {
-        yield return new WaitForSeconds(time);
-        _inPushback = false;
-        _currentSpeed = _speed;
-        CurrentDirection = _tempDirection;
     }
 
     // Update is called once per frame
@@ -103,7 +86,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonUp("Ability2"))
             _ability2Ended = true;
 
-        if (_isDodging || _noMovement || _isDead || _inPushback || TimeManager.Instance.IsPaused)
+        if (_isDodging || _noMovement || _isDead || TimeManager.Instance.IsPaused)
             return;
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -123,7 +106,7 @@ public class PlayerController : MonoBehaviour
         if (_isDead) return;
 
         Vector3 targetDirection = new Vector3(_horizontalInput, _verticalInput, 0).normalized;
-        if (_isDodging || _noMovement || _inPushback)
+        if (_isDodging || _noMovement)
             targetDirection = CurrentDirection;
 
         Move(targetDirection);
@@ -158,13 +141,31 @@ public class PlayerController : MonoBehaviour
 
     private void Move(Vector3 targetDirection)
     {
-        Vector3 targetVelocity = targetDirection * (_noMovement ? 0 : _currentSpeed);
+        var stopMovement = _noMovement;
         if (targetDirection.magnitude > 0)
         {
             CurrentDirection = targetDirection;
         }
+        else
+        {
+            stopMovement = true;
+        }
 
-        _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, targetVelocity, ref _currentVelocity, _movementSmoothing);
+        if (!stopMovement)
+        {
+            _playerRB.drag = 0;
+            Vector3 targetVelocity = targetDirection.normalized * _topSpeed;
+            Vector2 diffVelocity = new Vector2(targetVelocity.x - _playerRB.velocity.x, targetVelocity.y - _playerRB.velocity.y);
+            if (targetVelocity.x == 0)
+                diffVelocity.x *= _degradeInertiaMultiplier;
+            if (targetVelocity.y == 0)
+                diffVelocity.y *= _degradeInertiaMultiplier;
+            _playerRB.AddForce(diffVelocity / _timeToTopSpeed);
+        }
+        else
+        {
+            _playerRB.drag = _topSpeed / _timeToTopSpeed;
+        }
     }
 
     private void SetAbilities()
