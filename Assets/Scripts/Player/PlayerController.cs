@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible { get; private set; } = false;
     private float _horizontalInput, _verticalInput;
     private bool _ability1Pressed, _ability2Pressed, _ability1Ended, _ability2Ended, _isDodging, _noMovement, _isDead = false;
-    private readonly float _topSpeed = 16f, _timeToTopSpeed = .25f;
+    private readonly float _topSpeed = 12f, _timeToTopSpeed = .2f, _degradeInertiaMultiplier = 6f, _dashMultiplier = 1.5f;
     private PlayerHealth _playerHealth;
     private BaseAbility _ability1, _ability2;
     private Dictionary<AbilityType, BaseAbility> _abilityMap = new Dictionary<AbilityType, BaseAbility>();
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         _isDodging = true;
         IsInvincible = true;
-        _playerRB.AddForce(CurrentDirection * _topSpeed, ForceMode2D.Impulse);
+        _playerRB.AddForce(CurrentDirection * _topSpeed * _dashMultiplier, ForceMode2D.Impulse);
     }
 
     public void EndDodge()
@@ -156,6 +156,10 @@ public class PlayerController : MonoBehaviour
             _playerRB.drag = 0;
             Vector3 targetVelocity = targetDirection.normalized * _topSpeed;
             Vector2 diffVelocity = new Vector2(targetVelocity.x - _playerRB.velocity.x, targetVelocity.y - _playerRB.velocity.y);
+            if (targetVelocity.x == 0)
+                diffVelocity.x *= _degradeInertiaMultiplier;
+            if (targetVelocity.y == 0)
+                diffVelocity.y *= _degradeInertiaMultiplier;
             _playerRB.AddForce(diffVelocity / _timeToTopSpeed);
         }
         else
