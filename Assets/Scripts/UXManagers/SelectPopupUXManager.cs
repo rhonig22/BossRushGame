@@ -22,7 +22,7 @@ public class SelectPopupUXManager : MonoBehaviour
         _newAbility = newAbility;
         _rewardNum = rewardNum;
         _abilities = DataManager.Instance.GetAbilities();
-        _newAbilityName.text = newAbility.ToString();
+        _newAbilityName.text = newAbility.ToString() + "?";
         _ability1Name.text = _abilities[0].ToString();
         _ability2Name.text = _abilities[1].ToString();
         _selectPopup.SetActive(true);
