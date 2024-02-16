@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class JumpAbility : BaseAbility
 {
-    private readonly float _jumpTime = .25f;
-    private readonly float _initialShadowSpeed = 6f;
+    private readonly float _jumpTime = .25f, _initialShadowSpeed = 6f, _aoeRadius = 2f, _aoeDamageMultiplier = 1.5f, _aoeTime = .1f;
     private readonly string[] _enemyMask = new string[] { "Enemy" };
     private readonly string[] _wallMask = new string[] { "Wall" };
     private readonly string[] _nothingMask = new string[] { "Nothing" };
@@ -18,6 +18,7 @@ public class JumpAbility : BaseAbility
     [SerializeField] private GameObject _shadow;
     [SerializeField] private AudioClip _startJumpSound;
     [SerializeField] private AudioClip _endJumpSound;
+    [SerializeField] private ParticleSystem _aoeParticles;
 
     private void Awake()
     {
@@ -79,5 +80,31 @@ public class JumpAbility : BaseAbility
         _collider.excludeLayers = LayerMask.GetMask(_nothingMask);
         _playerController.RestoreMovement();
         _shadow.transform.localPosition = Vector3.zero;
+        AreaOfEffectAttack();
+    }
+
+    private void AreaOfEffectAttack()
+    {
+        _aoeParticles.Play();
+        _playerController.triggerScreenShake.Invoke();  
+        _playerController.EnableInvincibility(true);
+        var colliders = Physics2D.OverlapCircleAll(transform.position, _aoeRadius, LayerMask.GetMask(_enemyMask));
+
+        StartCoroutine(EndAreaOfEffect(colliders));
+    }
+
+    private IEnumerator EndAreaOfEffect(Collider2D[] colliders)
+    {
+        yield return new WaitForSeconds(_aoeTime);
+        _playerController.EnableInvincibility(false);
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(_aoeDamageMultiplier));
+                var collisionPoint = collider.ClosestPoint(transform.position);
+                collider.GetComponent<BaseBossController>().SprayParticles(collisionPoint);
+            }
+        }
     }
 }

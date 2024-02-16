@@ -70,6 +70,11 @@ public class PlayerController : MonoBehaviour
         _noMovement = false;
     }
 
+    public void EnableInvincibility(bool enable)
+    {
+        IsInvincible = enable;
+    }
+
     public void TakePushback(float force, Vector3 direction)
     {
         _playerRB.AddForce(direction * force, ForceMode2D.Impulse);

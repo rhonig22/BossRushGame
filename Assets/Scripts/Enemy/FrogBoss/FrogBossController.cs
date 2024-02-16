@@ -53,7 +53,7 @@ public class FrogBossController : BaseBossController
         if(_currentAttack == FrogAttackType.Proximity)
         {
             float jumpProgress = (_startJumpLocation - _rb.position).magnitude / (_startJumpLocation - _playerLocation).magnitude;
-            if (jumpProgress > .98f)
+            if (jumpProgress > .95f)
                 jumpProgress = 1f;
 
             _bossAttackAnimator.SetFloat("JumpProgress", jumpProgress);
