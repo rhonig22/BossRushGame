@@ -62,10 +62,10 @@ public class DataManager : MonoBehaviour
     public bool ShouldPauseAtStart { get; private set; } = true;
     public string[] FrogBossNames { get; private set; } = new string[]
     {
-        "FRAWG",
-        "FRAWG... again",
-        "Harder FRAWG",
-        "ULTRA FRAWG"
+        "",
+        "... again",
+        "with increased difficulty",
+        "in its final form"
     };
     [SerializeField] private AbilityType _initialAbility1 = AbilityType.Dodge;
     [SerializeField] private AbilityType _initialAbility2 = AbilityType.Scratch;
