@@ -168,9 +168,9 @@ public class DataManager : MonoBehaviour
 
     public int GetBossesDefeated() { return _playerData.BossesDefeated; }
 
-    public int GetDamage(int multiplier)
+    public int GetDamage(float multiplier)
     {
-        var damage = _playerData.BaseDamage * multiplier;
+        var damage = Mathf.FloorToInt(_playerData.BaseDamage * multiplier);
         AddDamageDealt(damage);
         return damage;
     }

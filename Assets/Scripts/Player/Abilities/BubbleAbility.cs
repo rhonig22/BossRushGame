@@ -7,8 +7,8 @@ public class BubbleAbility : BaseAbility
 {
     [SerializeField] private GameObject _bubble;
     [SerializeField] private AudioClip _bubbleSpitSound;
-    private readonly float _bubbleDelay = 0.25f, _minMagnitude = 1f, _maxMagnitude = 7f, _minSize = .5f, _maxSize = 1.5f, _maxCharge = 1f;
-    private float _magnitude = 1f, _timeCharged = 0;
+    private readonly float _bubbleDelay = 0.25f, _minMagnitude = 1f, _maxMagnitude = 7f, _minSize = .5f, _maxSize = 1.5f, _minMultiplier = 1f, _maxMultiplier = 1.5f, _maxCharge = 1f;
+    private float _magnitude = 1f, _timeCharged = 0, _damageMultiplier = 1f;
     private bool _isBubbleCharging = false;
     private GameObject _tempBubble;
     private BubbleController _tempBubbleController;
@@ -19,6 +19,7 @@ public class BubbleAbility : BaseAbility
         {
             _timeCharged += Time.deltaTime;
             _magnitude = Mathf.Lerp(_minMagnitude, _maxMagnitude, _timeCharged / _maxCharge);
+            _damageMultiplier = Mathf.Lerp(_minMultiplier, _maxMultiplier, _timeCharged / _maxCharge);
             _tempBubble.transform.localScale = Vector3.Lerp(Vector3.one * _minSize, Vector3.one * _maxSize, _timeCharged / _maxCharge);
         }
     }
@@ -54,6 +55,7 @@ public class BubbleAbility : BaseAbility
     {
         var endPosition = _tempBubble.transform.position + _playerController.CurrentDirection * _magnitude;
         SoundManager.Instance.PlaySound(_bubbleSpitSound, transform.position);
+        _tempBubbleController.SetDamageMultiplier(_damageMultiplier);
         _tempBubbleController.SendBubbleWithDelay(_bubbleDelay, endPosition);
 
         _tempBubble = null;

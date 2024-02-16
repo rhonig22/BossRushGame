@@ -9,7 +9,7 @@ public class BubbleController : FollowBossController
     protected int _bubbleHealth = 20;
     private Vector3 _startPosition, _endPosition;
     private float _desiredDuration = 1.2f;
-    private float _elapsedTime, _percentageComplete;
+    private float _elapsedTime, _percentageComplete, _damageMultiplier = 1;
     private bool _startMovement = false;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private string _objectToSeek = "Player";
@@ -32,6 +32,11 @@ public class BubbleController : FollowBossController
             _percentageComplete = _elapsedTime / _desiredDuration;
             transform.position = Vector3.Lerp(_startPosition, _endPosition, _curve.Evaluate(_percentageComplete));
         }
+    }
+
+    public void SetDamageMultiplier(float multiplier)
+    {
+        _damageMultiplier = multiplier;
     }
 
     public void SendBubbleWithDelay(float waitTime, Vector3 endPosition)
@@ -58,7 +63,7 @@ public class BubbleController : FollowBossController
         {
             if (_objectToSeek == "Enemy")
             {
-                collision.collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(1));
+                collision.collider.GetComponent<BossHealth>().TakeDamage(DataManager.Instance.GetDamage(_damageMultiplier));
                 var contact = collision.GetContact(0);
                 collision.collider.GetComponent<BaseBossController>().SprayParticles(contact.point);
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScratchAbility : BaseAbility
 {
-    private readonly int _scratchDamageMultiplier = 1;
+    private readonly float _scratchDamageMultiplier = 1;
     private bool _isScratching = false;
     [SerializeField] private GameObject _scratchArea;
     [SerializeField] private CapsuleCollider2D _scratchCollider;
