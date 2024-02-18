@@ -112,6 +112,7 @@ public class TransitionScreenUXManager : MonoBehaviour
         _someCheeseSelected = true;
         _soldSomeCheese.SetActive(true);
         _someCheeseButton.interactable = false;
+        _someCheeseButton.GetComponent<CanvasGroup>().alpha = 0.6f;
         _freeTag.GetComponent<Image>().enabled = false;
         if (!_rewardSelected)
         {
@@ -135,8 +136,11 @@ public class TransitionScreenUXManager : MonoBehaviour
     {
         _rewardSelected = true;
         _ability1Button.interactable = false;
+        _ability1Button.GetComponent<CanvasGroup>().alpha = 0.6f;
         _ability2Button.interactable = false;
+        _ability2Button.GetComponent<CanvasGroup>().alpha = 0.6f;
         _heckaCheeseButton.interactable = false;
+        _heckaCheeseButton.GetComponent<CanvasGroup>().alpha = 0.6f;
         if (!_someCheeseSelected)
         {
             var navigation = _someCheeseButton.navigation;
