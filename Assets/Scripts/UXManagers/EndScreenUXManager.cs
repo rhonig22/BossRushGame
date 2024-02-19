@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class EndScreenUXManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class EndScreenUXManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] GameObject nameEdit;
     [SerializeField] TMP_InputField nameInput;
-    [SerializeField] GameObject playButton;
+    [SerializeField] Button playButton;
     private readonly float _waitTime = .5f;
     private readonly int _bossMultiplier = 500;
     private readonly int _damageMultiplier = 1;
@@ -31,7 +32,7 @@ public class EndScreenUXManager : MonoBehaviour
         if (_name == string.Empty)
         {
             ShowEditName(true);
-            nameInput.Select();
+            nameInput.ActivateInputField();
         }
         else
             nameText.text = _name;
@@ -40,10 +41,10 @@ public class EndScreenUXManager : MonoBehaviour
     }
     void Update()
     {
-        if (nameInput.isFocused && Input.GetKeyUp(KeyCode.Return))
+        /*if (nameInput.isFocused && Input.GetKeyUp(KeyCode.Return))
         {
             SubmitName();
-        }
+        }*/
     }
 
     private IEnumerator LoadScores()
@@ -88,6 +89,7 @@ public class EndScreenUXManager : MonoBehaviour
     public void EditName()
     {
         ShowEditName(true);
+        nameInput.ActivateInputField();
     }
 
     public void SubmitName()
@@ -98,8 +100,7 @@ public class EndScreenUXManager : MonoBehaviour
             nameText.text = _name;
             ShowEditName(false);
             SubmitScore();
+            playButton.Select();
         });
-
-        EventSystem.current.SetSelectedGameObject(playButton);
     }
 }

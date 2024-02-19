@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class JumpAbility : BaseAbility
 {
-    private readonly float _jumpTime = .25f, _initialShadowSpeed = 6f, _aoeRadius = 2f, _aoeDamageMultiplier = 1.5f, _aoeTime = .1f;
+    private readonly float _jumpTime = .25f, _initialShadowSpeed = 6f, _aoeRadius = 2f, _aoeDamageMultiplier = 1.5f, _aoeTime = .1f, _initialDistance = 1.5f;
     private readonly string[] _enemyMask = new string[] { "Enemy" };
     private readonly string[] _wallMask = new string[] { "Wall" };
     private readonly string[] _nothingMask = new string[] { "Nothing" };
@@ -52,6 +53,7 @@ public class JumpAbility : BaseAbility
         _shadow.SetActive(true);
         _isShadowMoving = true;
         _shadowSpeed = _initialShadowSpeed;
+        _shadow.transform.localPosition += _playerController.CurrentDirection * _initialDistance;
         _playerController.HaltMovement();
         SoundManager.Instance.PlaySound(_startJumpSound, transform.position);
     }

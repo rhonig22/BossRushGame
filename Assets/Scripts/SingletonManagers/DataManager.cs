@@ -41,11 +41,12 @@ public class DataManager : MonoBehaviour
                 { FrogAttackType.Babies, 00 },
             }),
     };
-    public FrogBossDifficulty FrogBossDifficulty { get; private set; }
-    public Ability[,] Rewards { get; private set; } = new Ability[,]
+    private Ability[,] _initialRewards = new Ability[,]
     {
         {new Ability("Bubble Wand", AbilityType.Bubble), new Ability("Jump Boots", AbilityType.Jump) }
     };
+    public FrogBossDifficulty FrogBossDifficulty { get; private set; }
+    public Ability[,] Rewards { get; private set; }
     public int CurrentDifficulty
     {
         get { return _currentDifficulty; }
@@ -109,6 +110,9 @@ public class DataManager : MonoBehaviour
         _playerData = new PlayerData(_initialAbility1, _initialAbility2);
         CurrentDifficulty = 0;
         TimePassed = 0f;
+        Rewards = (Ability[,])_initialRewards.Clone();
+        Rewards[0, 0].IsTaken = false;
+        Rewards[0, 1].IsTaken = false;
     }
 
     public void IncreaseDifficulty()

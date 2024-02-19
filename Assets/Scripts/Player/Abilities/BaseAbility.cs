@@ -30,6 +30,7 @@ public class Ability
 {
     public string Name = string.Empty;
     public AbilityType Type;
+    public bool IsTaken = false;
     public Ability(string name, AbilityType type)
     {
         Name = name;

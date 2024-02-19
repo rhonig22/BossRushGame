@@ -14,13 +14,11 @@ public class SelectPopupUXManager : MonoBehaviour
     [SerializeField] private Button _selectButton;
     private AbilityType _newAbility;
     private AbilityType[] _abilities;
-    private int _rewardNum;
     public UnityEvent Finished {  get; private set; } = new UnityEvent();
 
-    public void Open(AbilityType newAbility, int rewardNum)
+    public void Open(AbilityType newAbility)
     {
         _newAbility = newAbility;
-        _rewardNum = rewardNum;
         _abilities = DataManager.Instance.GetAbilities();
         _newAbilityName.text = newAbility.ToString() + "?";
         _ability1Name.text = _abilities[0].ToString();
@@ -31,18 +29,14 @@ public class SelectPopupUXManager : MonoBehaviour
 
     public void Ability1Selected()
     {
-        var ability = new Ability(string.Empty, _abilities[0]);
         DataManager.Instance.SetAbilities(_newAbility, _abilities[1]);
-        DataManager.Instance.Rewards[0, _rewardNum] = ability;
         _selectPopup.SetActive(false);
         Finished.Invoke();
     }
 
     public void Ability2Selected()
     {
-        var ability = new Ability(string.Empty, _abilities[1]);
         DataManager.Instance.SetAbilities(_abilities[0], _newAbility);
-        DataManager.Instance.Rewards[0, _rewardNum] = ability;
         _selectPopup.SetActive(false);
         Finished.Invoke();
     }
