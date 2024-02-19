@@ -38,6 +38,12 @@ public class HealthBar : MonoBehaviour
         _targetVal = max;
     }
 
+    public void SetStartingHealth(float start)
+    {
+        _currentVal = start;
+        _targetVal = start;
+    }
+
     public void SetNewVal(float newVal)
     {
         _targetVal = newVal;

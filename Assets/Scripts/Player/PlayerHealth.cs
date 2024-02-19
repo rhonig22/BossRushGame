@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         _maxHealth = DataManager.Instance.GetMaxHealth();
         Health = DataManager.Instance.GetHealth();
         _healthBar.SetInitialVal(_maxHealth);
-        _healthBar.SetNewVal(Health);
+        _healthBar.SetStartingHealth(Health);
     }
 
     public void TakeDamage(int damage)

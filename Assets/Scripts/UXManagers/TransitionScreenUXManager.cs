@@ -30,9 +30,9 @@ public class TransitionScreenUXManager : MonoBehaviour
 
     private void Start()
     {
+        _ability1Button.Select();
         SetCurrentAbilities();
         SetCurrentRewards();
-        _ability1Button.Select();
         _selectPopup.Finished.AddListener(() =>
         {
             SetCurrentAbilities();
@@ -94,7 +94,9 @@ public class TransitionScreenUXManager : MonoBehaviour
 
         RewardSold();
         _soldAbility1.SetActive(true);
-        _selectPopup.Open(DataManager.Instance.Rewards[0,0].Type, 0);
+        var reward = DataManager.Instance.Rewards[0, 0];
+        reward.IsTaken = true;
+        _selectPopup.Open(reward.Type);
     }
 
     public void Ability2Selected()
@@ -104,7 +106,9 @@ public class TransitionScreenUXManager : MonoBehaviour
 
         RewardSold();
         _soldAbility2.SetActive(true);
-        _selectPopup.Open(DataManager.Instance.Rewards[0, 1].Type, 1);
+        var reward = DataManager.Instance.Rewards[0, 1];
+        reward.IsTaken = true;
+        _selectPopup.Open(reward.Type);
     }
 
     private void SomeCheeseSold()
@@ -168,5 +172,33 @@ public class TransitionScreenUXManager : MonoBehaviour
         _reward2 = DataManager.Instance.Rewards[0, 1];
         _reward1Name.text = _reward1.Name == string.Empty ? _reward1.Type.ToString() : _reward1.Name;
         _reward2Name.text = _reward2.Name == string.Empty ? _reward2.Type.ToString() : _reward2.Name;
+        if (_reward1.IsTaken)
+        {
+            _ability1Button.interactable = false;
+            _ability1Button.GetComponent<CanvasGroup>().alpha = 0.6f;
+            _ability2Button.Select();
+
+            var navigation = _ability2Button.navigation;
+            navigation.selectOnUp = null;
+            _ability2Button.navigation = navigation;
+        }
+
+        if (_reward2.IsTaken)
+        {
+            _ability2Button.interactable = false;
+            _ability2Button.GetComponent<CanvasGroup>().alpha = 0.6f;
+            _heckaCheeseButton.Select();
+
+            var navigation = _heckaCheeseButton.navigation;
+            navigation.selectOnUp = _reward1.IsTaken ? null : _ability1Button;
+            _heckaCheeseButton.navigation = navigation;
+
+            if (!_reward1.IsTaken)
+            {
+                navigation = _ability1Button.navigation;
+                navigation.selectOnDown = _heckaCheeseButton;
+                _ability1Button.navigation = navigation;
+            }
+        }
     }
 }
