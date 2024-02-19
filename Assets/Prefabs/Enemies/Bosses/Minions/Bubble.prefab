@@ -54,6 +54,7 @@ MonoBehaviour:
   _spriteAnimator: {fileID: 9088498819088148797}
   _bossAttackAnimator: {fileID: 0}
   _damagedSound: {fileID: 0}
+  _damageParticles: {fileID: 0}
   _curve:
     serializedVersion: 2
     m_Curve:
@@ -187,7 +188,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 818590783, guid: e052f888e3f3a4def8375265e6cdd6a7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.55903924, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
