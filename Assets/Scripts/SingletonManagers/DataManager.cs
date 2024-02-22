@@ -41,11 +41,42 @@ public class DataManager : MonoBehaviour
                 { FrogAttackType.Babies, 00 },
             }),
     };
+    private BearBossDifficulty[] _bearDifficultyList = new BearBossDifficulty[] {
+        new BearBossDifficulty(400, 2, .25f, 1.5f, 0, 0, new Dictionary<BearAttackType, int>()
+            {
+                { BearAttackType.Rush, 40 },
+                { BearAttackType.Maul, 60 },
+                { BearAttackType.Rocks, 0 },
+                { BearAttackType.Hive, 0 },
+            }),
+        new BearBossDifficulty(400, 2, .25f, 1.5f, 6, 0, new Dictionary<BearAttackType, int>()
+            {
+                { BearAttackType.Rush, 30 },
+                { BearAttackType.Maul, 50 },
+                { BearAttackType.Rocks, 20 },
+                { BearAttackType.Hive, 0 },
+            }),
+        new BearBossDifficulty(450, 3, .25f, 1.5f, 8, 1, new Dictionary<BearAttackType, int>()
+            {
+                { BearAttackType.Rush, 30 },
+                { BearAttackType.Maul, 40 },
+                { BearAttackType.Rocks, 20 },
+                { BearAttackType.Hive, 15 },
+            }),
+        new BearBossDifficulty(500, 4, .25f, 1.5f, 10, 2, new Dictionary<BearAttackType, int>()
+            {
+                { BearAttackType.Rush, 30 },
+                { BearAttackType.Maul, 40 },
+                { BearAttackType.Rocks, 20 },
+                { BearAttackType.Hive, 15 },
+            }),
+    };
     private Ability[,] _initialRewards = new Ability[,]
     {
         {new Ability("Bubble Wand", AbilityType.Bubble), new Ability("Jump Boots", AbilityType.Jump) }
     };
     public FrogBossDifficulty FrogBossDifficulty { get; private set; }
+    public BearBossDifficulty BearBossDifficulty { get; private set; }
     public Ability[,] Rewards { get; private set; }
     public int CurrentDifficulty
     {
@@ -54,8 +85,12 @@ public class DataManager : MonoBehaviour
         {
             _currentDifficulty = (int)Mathf.Clamp(value, 0, _frogDifficultyList.Length - 1);
             FrogBossDifficulty = _frogDifficultyList[_currentDifficulty];
+            BearBossDifficulty = _bearDifficultyList[_currentDifficulty];
             if (value > _currentDifficulty)
+            {
                 FrogBossDifficulty.Health += _healthIncrement;
+                BearBossDifficulty.Health += _healthIncrement;
+            }
         }
     }
     public float TimePassed { get; private set; } = 0f;
