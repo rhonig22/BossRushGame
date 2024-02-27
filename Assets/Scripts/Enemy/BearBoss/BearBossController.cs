@@ -6,10 +6,12 @@ using UnityEngine;
 public class BearBossController : BaseBossController
 {
     private BearAttackType _currentAttack = BearAttackType.Idle;
-    private Vector2 _playerLocation = Vector2.zero;
+    private Vector2 _startRushLocation, _endLocation, _playerLocation = Vector2.zero;
     private bool _isDead = false;
     public float AttackWaitPeriod { get; private set; } = 1.5f;
     public float AttackTriggerChance { get; private set; } = .4f;
+    private readonly float _rushSpeed = 10f, _rushPastDistance = 1.5f;
+    public bool IsStunned { get; protected set; } = false;
     public Dictionary<BearAttackType, int> AttackChance = new Dictionary<BearAttackType, int>()
     {
         { BearAttackType.Rush, 40 },
@@ -35,7 +37,16 @@ public class BearBossController : BaseBossController
         base.Move();
         _rb.velocity = Vector2.zero;
 
-        transform.position = Vector3.MoveTowards(_rb.position, _playerLocation, CurrentSpeed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(_rb.position, _endLocation, CurrentSpeed * Time.fixedDeltaTime);
+
+        if (_currentAttack == BearAttackType.Rush && !IsStunned)
+        {
+            float rushProgress = (_startRushLocation - _rb.position).magnitude / (_startRushLocation - _endLocation).magnitude;
+            if (rushProgress > .95f)
+                rushProgress = 1f;
+
+            _bossAttackAnimator.SetFloat("RushProgress", rushProgress);
+        }
     }
 
     public override int DoDamage()
@@ -90,9 +101,11 @@ public class BearBossController : BaseBossController
         _currentAttack = BearAttackType.Idle;
         _enablePause = true;
         IsInvincible = false;
+        IsStunned = false;
         CurrentSpeed = 0;
         _bossAttackAnimator.SetTrigger("Idle");
     }
+
 
     public void StartAttack(BearAttackType attackType)
     {
@@ -139,7 +152,11 @@ public class BearBossController : BaseBossController
     private void RushAttack()
     {
         SetPlayerLocation();
-        // TODO: implement attack
+        _startRushLocation = _rb.position;
+        var direction = (_playerLocation - _startRushLocation).normalized * _rushPastDistance;
+        _endLocation = _playerLocation + direction;
+        CurrentSpeed = _rushSpeed;
+        IsInvincible = true;
     }
 
     private void MaulAttack()
@@ -159,11 +176,19 @@ public class BearBossController : BaseBossController
         // TODO: implement attack
     }
 
+    private void Stunned()
+    {
+        IsInvincible = false;
+        IsStunned = true;
+        CurrentSpeed = 0;
+        _bossAttackAnimator.SetTrigger("Stunned");
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider != null && _currentAttack == BearAttackType.Rush && collision.collider.CompareTag("Wall"))
         {
-            // TODO: damage self
+            Stunned();
         }
     }
 }
